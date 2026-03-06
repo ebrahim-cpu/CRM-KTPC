@@ -1,0 +1,35 @@
+﻿<html>
+<head>
+    <script>var canvas;
+    var context;
+    var x = 50;
+    var y = 50;
+    var dx = 5;
+    var dy = 5;
+
+    function init() {
+      canvas = document.getElementById("canvas");
+      context = canvas.getContext("2d");
+      setInterval(draw, 10);
+    }
+
+    function draw() {
+      context.clearRect(0, 0, canvas.width, canvas.height);
+      context.beginPath();
+      context.fillStyle = "#0000ff";
+      context.arc(x, y, 20, 0, Math.PI*2, true);
+      context.fill();
+      x += dx;
+      y += dy;
+      if (x < 0 || x > canvas.width) {
+        dx = -dx;
+      }
+      if (y < 0 || y > canvas.height) {
+        dy = -dy;
+      }
+    }</script>
+</head>
+<body onload="init();">
+    <canvas id="canvas" width="500" height="500"></canvas>
+</body>
+</html>

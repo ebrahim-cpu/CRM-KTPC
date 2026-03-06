@@ -1,0 +1,20 @@
+--------
+20260306
+
+
+--------
+20260303
+ALTER TABLE Investors_Profile
+ADD industrial_Park_Name VARCHAR(50) NULL;
+
+ALTER TABLE Investors_Profile
+ADD Date_Inquiry SMALLDATETIME NULL;
+
+ALTER TABLE Investors_Profile
+ADD Lease_Period INT NULL DEFAULT 0;
+
+--------
+20260302
+Development NB KTPC
+Success run
+<add name="CRMConnectionString" connectionString="Data Source=192.168.1.97;Initial Catalog=CRM_ktpc;User ID=sa;Password=qwer@1234" providerName="System.Data.SqlClient" />

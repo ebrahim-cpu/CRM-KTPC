@@ -1,0 +1,30 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <title></title>
+    <style>
+        .line-animation:hover:after {
+            content: "";
+            display: block;
+            width: 100%;
+            height: 2px;
+            background-color: red;
+            animation: anim 1s ease-in-out;
+        }
+
+        @keyframes anim {
+            from {
+                transform: scaleX(0);
+            }
+
+            to {
+                transform: scaleX(1);
+            }
+        }
+    </style>
+</head>
+<body>
+    <p class="line-animation">Hover me for line animation</p>
+</body>
+</html>

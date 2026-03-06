@@ -1,0 +1,33 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <title></title>
+    <style>
+        .text:hover:after {
+            content: "";
+            display: block;
+            width: 100%;
+            margin: 8px auto;
+            height: 2px;
+            background-color: black;
+            animation: animate 1s;
+        }
+
+        @keyframes animate {
+            0% {
+                transform: scaleX(0);
+            }
+
+            100% {
+                transform: scaleX(1);
+            }
+        }
+
+    </style>
+</head>
+<body>
+    <p class="text">Hover over me</p>
+
+</body>
+</html>

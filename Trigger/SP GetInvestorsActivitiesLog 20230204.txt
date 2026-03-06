@@ -1,0 +1,6 @@
+CREATE PROCEDURE GetInvestorsActivitiesLog
+AS
+BEGIN
+    SELECT Id, Company_Name, Activity_Date_Start, Company_Status, Action
+    FROM Investors_Activities_LOG
+END

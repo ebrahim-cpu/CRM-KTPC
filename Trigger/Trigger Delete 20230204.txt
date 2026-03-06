@@ -1,0 +1,93 @@
+USE [CRM_ktpc]
+GO
+/****** Object:  Trigger [dbo].[tr_Investors_Activities_Delete]    Script Date: 4/2/2023 5:13:53 PM ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+ALTER TRIGGER [dbo].[tr_Investors_Activities_Delete]
+ON [dbo].[Investors_Activities]
+AFTER DELETE
+AS
+BEGIN
+SET NOCOUNT ON;
+DECLARE @Id INT;
+DECLARE @Guid VARCHAR(50);
+DECLARE @Activity_Description VARCHAR(MAX);
+DECLARE @Company_Name VARCHAR(50);
+DECLARE @Activity_Type VARCHAR(50);
+DECLARE @Activity_Date_Start DATETIME;
+DECLARE @Activity_Date_End DATETIME;
+DECLARE @Year INT;
+DECLARE @Month INT;
+DECLARE @Week INT;
+DECLARE @Day INT;
+DECLARE @CreatedDate DATETIME;
+DECLARE @UpdatedDate DATETIME;
+DECLARE @CreatedBy VARCHAR(50);
+DECLARE @UpdatedBy VARCHAR(50);
+DECLARE @Company_Status VARCHAR(50);
+DECLARE @Ip_Address VARCHAR(50);
+
+SELECT
+	@Id = Id,
+	@Guid = Guid,
+	@Activity_Description = Activity_Description,
+    @Company_Name = Company_Name,
+    @Activity_Type = Activity_Type,
+    @Activity_Date_Start = Activity_Date_Start,
+    @Activity_Date_End = Activity_Date_End,
+    @Year = Year,
+    @Month = Month,
+    @Week = Week,
+    @Day = Day,
+    @CreatedDate = CreatedDate,
+    @UpdatedDate = UpdatedDate,
+    @CreatedBy = CreatedBy,
+    @UpdatedBy = UpdatedBy,
+    @Company_Status = Company_Status,
+    @Ip_Address = Ip_Address
+FROM
+    deleted;
+
+INSERT INTO Investors_Activities_LOG (
+    Id,
+	Guid,
+	Activity_Description,
+    Company_Name,
+    Activity_Type,
+    Activity_Date_Start,
+    Activity_Date_End,
+    Year,
+    Month,
+    Week,
+    Day,
+    CreatedDate,
+    UpdatedDate,
+    CreatedBy,
+    UpdatedBy,
+    Company_Status,
+    Ip_Address,
+    Action
+)
+VALUES (
+	@Id,
+	@Guid,
+    @Activity_Description,
+    @Company_Name,
+    @Activity_Type,
+    @Activity_Date_Start,
+    @Activity_Date_End,
+    @Year,
+    @Month,
+    @Week,
+    @Day,
+    @CreatedDate,
+    @UpdatedDate,
+    @CreatedBy,
+    @UpdatedBy,
+    @Company_Status,
+    @Ip_Address,
+    'DELETE'
+);
+END;
