@@ -98,6 +98,56 @@
             .btn-leads-status:hover {
                 background-color: #e0e0e0;
             }
+
+            /* Modern Bootstrap-style Pager for GridView */
+            .pagination-ys {
+                padding-left: 0;
+                margin: 20px 0;
+                border-radius: 4px;
+                display: inline-block;
+            }
+            .pagination-ys table {
+                border-collapse: collapse;
+                width: auto;
+                margin: 0 auto;
+            }
+            .pagination-ys td {
+                padding: 0;
+                margin: 0;
+                border: none !important;
+            }
+            .pagination-ys a, .pagination-ys span {
+                position: relative;
+                float: left;
+                padding: 6px 12px;
+                margin-left: -1px;
+                line-height: 1.42857143;
+                color: #337ab7;
+                text-decoration: none;
+                background-color: #fff;
+                border: 1px solid #ddd;
+            }
+            .pagination-ys span {
+                z-index: 2;
+                color: #fff;
+                cursor: default;
+                background-color: #337ab7;
+                border-color: #337ab7;
+            }
+            .pagination-ys a:hover, .pagination-ys span:hover, .pagination-ys a:focus, .pagination-ys span:focus {
+                color: #23527c;
+                background-color: #eee;
+                border-color: #ddd;
+            }
+            .pagination-ys td:first-child a, .pagination-ys td:first-child span {
+                margin-left: 0;
+                border-top-left-radius: 4px;
+                border-bottom-left-radius: 4px;
+            }
+            .pagination-ys td:last-child a, .pagination-ys td:last-child span {
+                border-top-right-radius: 4px;
+                border-bottom-right-radius: 4px;
+            }
         </style>
     </head>
 
@@ -157,17 +207,27 @@
                                 <h2>Investors List</h2>
                             </div>
                             <div class="col-sm-6" align="right">
-                                <a href="New_Investors_Profile.aspx" class="btn btn-default" data-toggle="tooltip"
-                                    data-placement="bottom" title="New Investor"><span
-                                        class="glyphicon glyphicon-plus"></span></a>
-                                <a href="Dashboard.aspx" class="btn btn-default" data-toggle="tooltip"
-                                    data-placement="bottom" title="Home"><span
-                                        class="glyphicon glyphicon-home"></span></a>
-                                <a href="List_Contacts.aspx" class="btn btn-default" data-toggle="tooltip"
-                                    data-placement="bottom" title="Contacts"><span
-                                        class="glyphicon glyphicon-phone-alt"></span></a>
-                                <asp:Button ID="btnExport" runat="server" class="btn btn-primary" Text="Export to Excel"
-                                    OnClick="BtnExport_Click" />
+                                <div class="form-inline">
+                                    <label for="ddlPageSize" style="margin-right: 5px;">Show: </label>
+                                    <asp:DropDownList ID="ddlPageSize" runat="server" AutoPostBack="True" OnSelectedIndexChanged="DdlPageSize_SelectedIndexChanged" CssClass="form-control input-sm" style="display:inline-block; width:auto; margin-right:10px; vertical-align:middle;">
+                                        <asp:ListItem Value="10">10</asp:ListItem>
+                                        <asp:ListItem Value="15">15</asp:ListItem>
+                                        <asp:ListItem Value="20">20</asp:ListItem>
+                                        <asp:ListItem Value="50">50</asp:ListItem>
+                                    </asp:DropDownList>
+                                    
+                                    <a href="New_Investors_Profile.aspx" class="btn btn-default btn-sm" data-toggle="tooltip"
+                                        data-placement="bottom" title="New Investor"><span
+                                            class="glyphicon glyphicon-plus"></span></a>
+                                    <a href="Dashboard.aspx" class="btn btn-default btn-sm" data-toggle="tooltip"
+                                        data-placement="bottom" title="Home"><span
+                                            class="glyphicon glyphicon-home"></span></a>
+                                    <a href="List_Contacts.aspx" class="btn btn-default btn-sm" data-toggle="tooltip"
+                                        data-placement="bottom" title="Contacts"><span
+                                            class="glyphicon glyphicon-phone-alt"></span></a>
+                                    <asp:Button ID="btnExport" runat="server" class="btn btn-primary btn-sm" Text="Export to Excel"
+                                        OnClick="BtnExport_Click" style="vertical-align:middle;" />
+                                </div>
                             </div>
                         </div>
                         <asp:GridView ID="gvActivities" runat="server" CssClass="table table-hover table-bordered"
@@ -175,7 +235,9 @@
                             DataKeyNames="Id,Company_Name" CellPadding="4" ForeColor="#000000" GridLines="None"
                             AllowSorting="False" OnRowEditing="GvActivities_RowEditing"
                             OnSelectedIndexChanged="GvActivities_SelectedIndexChanged"
-                            OnRowDataBound="gvActivities_RowDataBound">
+                            OnRowDataBound="gvActivities_RowDataBound"
+                            AllowPaging="True" PageSize="10" OnPageIndexChanging="gvActivities_PageIndexChanging">
+                            <PagerStyle CssClass="pagination-ys" HorizontalAlign="Center" />
                             <Columns>
                                 <asp:BoundField DataField="Id" HeaderText="ID" Visible="false" />
                                 <asp:TemplateField HeaderText="#">

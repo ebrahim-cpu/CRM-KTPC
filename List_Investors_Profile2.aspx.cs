@@ -23,25 +23,48 @@ namespace CRM
                     Response.Redirect("Default.aspx");
                 }
                 else
-                DisplayAll();
+                {
+                    gvActivities.PageSize = Convert.ToInt32(ddlPageSize.SelectedValue);
+                    LoadDataAndBind();
+                }
             }
         }
-        protected void DisplayAll()
-        {            
+
+        private void LoadDataAndBind()
+        {
             using (SqlConnection con = new SqlConnection(ConfigurationManager.ConnectionStrings["CRMConnectionString"].ConnectionString))
             {
                 con.Open();
-                // Create a new SQL command
-                SqlCommand cmd = new SqlCommand("SELECT Id, Company_Name, Date_Inquiry, PIC, Company_Country, Land_Size_Required, Building_Size, Company_Status, Company_Industry_Type, Investment_Type, Leads_Status, Investors_Decision_Making, Investors_Internal_Status FROM Investors_Profile Order by Company_Name ASC", con);
-                // Execute the command and retrieve the results
+                string query;
+                SqlCommand cmd;
+                string searchKeyword = txtSearch.Text.Trim();
+                
+                if (string.IsNullOrEmpty(searchKeyword))
+                {
+                    query = "SELECT Id, Company_Name, Date_Inquiry, Company_Country, Land_Size_Required, Building_Size, Company_Status, Company_Industry_Type, Investment_Type, Leads_Status, PIC, Investors_Decision_Making, Investors_Internal_Status FROM Investors_Profile ORDER BY Company_Name ASC";
+                    cmd = new SqlCommand(query, con);
+                }
+                else
+                {
+                    query = "SELECT Id, Company_Name, Date_Inquiry, Company_Country, Land_Size_Required, Building_Size, Company_Status, Company_Industry_Type, Investment_Type, Leads_Status, PIC, Investors_Decision_Making, Investors_Internal_Status FROM Investors_Profile WHERE Company_Name LIKE '%' + @searchKeyword + '%' OR Company_Country LIKE '%' + @searchKeyword + '%' OR Company_Phone LIKE '%' + @searchKeyword + '%' OR Company_Contact_Email LIKE '%' + @searchKeyword + '%' OR Company_Industry_Type LIKE '%' + @searchKeyword + '%' OR Investment_Type LIKE '%' + @searchKeyword + '%' OR Leads_Status LIKE '%' + @searchKeyword + '%' OR PIC LIKE '%' + @searchKeyword + '%' ORDER BY Company_Name ASC";
+                    cmd = new SqlCommand(query, con);
+                    cmd.Parameters.AddWithValue("@searchKeyword", searchKeyword);
+                }
+
                 DataTable dt = new DataTable();
-                dt.Load(cmd.ExecuteReader());
-                // Bind the results to the Gridview
+                using (SqlDataAdapter da = new SqlDataAdapter(cmd))
+                {
+                    da.Fill(dt);
+                }
                 gvActivities.DataSource = dt;
                 gvActivities.DataBind();
-                // Close the connection
                 con.Close();
             }
+        }
+
+        protected void DisplayAll()
+        {            
+            LoadDataAndBind();
         }
         protected void GvActivities_RowDeleting(object sender, GridViewDeleteEventArgs e)
         {
@@ -89,25 +112,20 @@ namespace CRM
         }
         private void BindGridview()
         {
-            // Create a new SQL connection
-            using (SqlConnection con = new SqlConnection(ConfigurationManager.ConnectionStrings["CRMConnectionString"].ConnectionString))
-            {
-                // Open the connection
-                con.Open();
-                // Create a new SQL command
-                SqlCommand cmd = new SqlCommand("SELECT Id, Company_Name, Date_Inquiry, Company_Country, Land_Size_Required, Building_Size, Company_Status, Company_Industry_Type, Investment_Type, Leads_Status, PIC, Investors_Decision_Making, Investors_Internal_Status FROM Investors_Profile Order by Company_Name ASC", con);
-                // Create a new SQL data adapter
-                SqlDataAdapter da = new SqlDataAdapter(cmd);
-                // Create a new data table
-                DataTable dt = new DataTable();
-                // Fill the data table with data from the database
-                da.Fill(dt);
-                // Bind the Gridview with the data table
-                gvActivities.DataSource = dt;
-                gvActivities.DataBind();
-                // Close the connection
-                con.Close();
-            }
+            LoadDataAndBind();
+        }
+
+        protected void gvActivities_PageIndexChanging(object sender, GridViewPageEventArgs e)
+        {
+            gvActivities.PageIndex = e.NewPageIndex;
+            LoadDataAndBind();
+        }
+
+        protected void DdlPageSize_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            gvActivities.PageSize = Convert.ToInt32(ddlPageSize.SelectedValue);
+            gvActivities.PageIndex = 0;
+            LoadDataAndBind();
         }
         protected void BtnFiles_Click(object sender, EventArgs e)
         {
@@ -191,23 +209,8 @@ namespace CRM
         }
         protected void BtnSearch_Click(object sender, EventArgs e)
         {
-            using (SqlConnection connection = new SqlConnection(ConfigurationManager.ConnectionStrings["CRMConnectionString"].ConnectionString))
-            {
-                connection.Open();
-                string searchKeyword = txtSearch.Text;
-                string query = "SELECT * FROM Investors_Profile WHERE Company_Name LIKE '%' + @searchKeyword + '%' OR Company_Country LIKE '%' + @searchKeyword + '%' OR Company_Phone LIKE '%' + @searchKeyword + '%' OR Company_Contact_Email LIKE '%' + @searchKeyword + '%' OR Company_Industry_Type LIKE '%' + @searchKeyword + '%' OR Investment_Type LIKE '%' + @searchKeyword + '%' OR Leads_Status LIKE '%' + @searchKeyword + '%'";
-                using (SqlCommand command = new SqlCommand(query, connection))
-                {
-                    command.Parameters.AddWithValue("@searchKeyword", searchKeyword);
-                    using (SqlDataAdapter adapter = new SqlDataAdapter(command))
-                    {
-                        DataTable dt = new DataTable();
-                        adapter.Fill(dt);
-                        gvActivities.DataSource = dt;
-                        gvActivities.DataBind();
-                    }
-                }
-            }
+            gvActivities.PageIndex = 0;
+            LoadDataAndBind();
         }
         protected void BtnExport_Click(object sender, EventArgs e)
         {
@@ -253,23 +256,8 @@ namespace CRM
         }
         protected void LnkSearch_Click(object sender, EventArgs e)
         {
-            using (SqlConnection connection = new SqlConnection(ConfigurationManager.ConnectionStrings["CRMConnectionString"].ConnectionString))
-            {
-                connection.Open();
-                string searchKeyword = txtSearch.Text;
-                string query = "SELECT * FROM Investors_Profile WHERE Company_Name LIKE '%' + @searchKeyword + '%' OR Company_Country LIKE '%' + @searchKeyword + '%' OR Company_Phone LIKE '%' + @searchKeyword + '%' OR Company_Contact_Email LIKE '%' + @searchKeyword + '%' OR Company_Industry_Type LIKE '%' + @searchKeyword + '%' OR Investment_Type LIKE '%' + @searchKeyword + '%' OR Leads_Status LIKE '%' + @searchKeyword + '%' OR PIC LIKE '%' + @searchKeyword + '%'";
-                using (SqlCommand command = new SqlCommand(query, connection))
-                {
-                    command.Parameters.AddWithValue("@searchKeyword", searchKeyword);
-                    using (SqlDataAdapter adapter = new SqlDataAdapter(command))
-                    {
-                        DataTable dt = new DataTable();
-                        adapter.Fill(dt);
-                        gvActivities.DataSource = dt;
-                        gvActivities.DataBind();
-                    }
-                }
-            }
+            gvActivities.PageIndex = 0;
+            LoadDataAndBind();
         }
         protected string GetLeadsStatusStyle(string leadsStatus)
         {
