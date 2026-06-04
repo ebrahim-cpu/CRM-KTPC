@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Configuration;
 using System.Data;
@@ -12,7 +12,7 @@ using System.Web.UI.WebControls;
 
 namespace CRM
 {
-    public partial class New_Investors_Profile : System.Web.UI.Page
+    public partial class New_Investors_Profile_V2 : System.Web.UI.Page
     {
         protected void Page_Load(object sender, EventArgs e)
         {
@@ -21,7 +21,7 @@ namespace CRM
                 try {
                 if (Session["Username"] != null)
                 {
-                    lblUsername.Text = Session["Username"].ToString();
+                    lblUsername.Text = Convert.ToString(Session["Username"]);
                 }
                 else
                 {
@@ -69,7 +69,7 @@ namespace CRM
                         Project_Timeline, Start_Construction_Date, Start_Operation_Date, Company_Description, Company_Status, 
                         Is_RFP, RFP_Date_Start, RFP_Date_End, RFP_Description, Days_Till_Expire, 
                         Decision, Decision_Description, CreatedBy, Ip_Address, Leads_Status, industrial_Park_Name,
-                        Date_Inquiry, Lease_Period
+                        Date_Inquiry, Lease_Period, Investors_Decision_Making, Investors_Internal_Status
                     ) VALUES (
                         @CompanyCode, @CompanyName, @CompanyAddress, @CompanyPostal, @CompanyCountry, @CompanyPhone,
                         @Website, @YearFounded, @Headquaters, @Branches, 
@@ -78,7 +78,7 @@ namespace CRM
                         @ProjectTimeline, @StartConstructionDate, @StartOperationDate, @CompanyDescription, @CompanyStatus, 
                         @Is_RFP, @RFP_Date_Start, @RFP_Date_End, @RFP_Description, @Days_Till_Expire, 
                         @Decision, @Decision_Description, @CreatedBy, @Ip_Address, @Leads_Status, @IndustrialPark,
-                        @DateInquiry, @LeasePeriod
+                        @DateInquiry, @LeasePeriod, @InvestorsDecisionMaking, @InvestorsInternalStatus
                     ); SELECT SCOPE_IDENTITY();";
 
                     SqlCommand cmd = new SqlCommand(query, con);
@@ -130,8 +130,22 @@ namespace CRM
                     cmd.Parameters.AddWithValue("@IndustrialPark", industrialPark_ddl != null && industrialPark_ddl.SelectedItem != null ? industrialPark_ddl.SelectedItem.Text : "");
                     cmd.Parameters.AddWithValue("@DateInquiry", (txtDateInquiry != null && !string.IsNullOrEmpty(txtDateInquiry.Text)) ? (object)txtDateInquiry.Text : (object)DBNull.Value);
                     cmd.Parameters.AddWithValue("@LeasePeriod", (txtLeasePeriod != null && int.TryParse(txtLeasePeriod.Text, out int lp)) ? lp : 0);
+                    cmd.Parameters.AddWithValue("@InvestorsDecisionMaking", txtInvestorsDecisionMaking != null ? txtInvestorsDecisionMaking.Text : "");
+                    cmd.Parameters.AddWithValue("@InvestorsInternalStatus", txtInvestorsInternalStatus != null ? txtInvestorsInternalStatus.Text : "");
                     
-                    cmd.ExecuteScalar();
+                    object newIdObj = cmd.ExecuteScalar();
+                    if (newIdObj != null)
+                    {
+                        int newId = Convert.ToInt32(newIdObj);
+                        string quickQuery = "UPDATE Investors_Profile SET Investors_Decision_Making = @val1, Investors_Internal_Status = @val2 WHERE Id = @Id";
+                        using (SqlCommand quickCmd = new SqlCommand(quickQuery, con))
+                        {
+                            quickCmd.Parameters.AddWithValue("@val1", txtInvestorsDecisionMaking != null ? txtInvestorsDecisionMaking.Text : "");
+                            quickCmd.Parameters.AddWithValue("@val2", txtInvestorsInternalStatus != null ? txtInvestorsInternalStatus.Text : "");
+                            quickCmd.Parameters.AddWithValue("@Id", newId);
+                            quickCmd.ExecuteNonQuery();
+                        }
+                    }
                     con.Close();
                 }
                 Response.Redirect("List_Investors_Profile.aspx");
@@ -155,7 +169,7 @@ namespace CRM
                         da.Fill(dt);
                         ddlCountry.DataSource = dt;
                         ddlCountry.DataTextField = "CountryName";
-                        ddlCountry.DataValueField = "ID";
+                        ddlCountry.DataValueField = "CountryName";
                         ddlCountry.DataBind();
                         con.Close();
                     }

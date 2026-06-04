@@ -1,4 +1,4 @@
-﻿<%@ Page Language="C#" AutoEventWireup="true" CodeBehind="List_RFP.aspx.cs" Inherits="CRM.List_RFP2" %>
+<%@ Page Language="C#" AutoEventWireup="true" CodeBehind="List_RFP.aspx.cs" Inherits="CRM.List_RFP2" %>
 
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml">
@@ -15,10 +15,11 @@
         <nav class="navbar navbar-inverse">
             <div class="container-fluid">
                 <div class="navbar-header">
-                    <a class="navbar-brand" href="Home.aspx">CRM v1.0</a>
+                    <a class="navbar-brand" href="Dashboard.aspx">CRM v1.0</a>
                 </div>
                 <ul class="nav navbar-nav">
-                    <li class="active"><a href="Home.aspx">Home</a></li>
+                    
+                            <li><a href="Dashboard.aspx">Dashboard</a></li>
                     <li class="dropdown">
                         <a class="dropdown-toggle" data-toggle="dropdown" href="#">Profiles
                             <span class="caret"></span></a>
@@ -60,7 +61,7 @@
             <h2>RFP - Monitoring List</h2>
         </div>
         <div class="col-sm-6" align="right">
-            <a href="Home.aspx" class="btn btn-default" data-toggle="tooltip" data-placement="bottom" title="Home"><span class="glyphicon glyphicon-home"></span></a>
+            <a href="Dashboard.aspx" class="btn btn-default" data-toggle="tooltip" data-placement="bottom" title="Home"><span class="glyphicon glyphicon-home"></span></a>
             <asp:Button ID="btnExport" runat="server" class="btn btn-primary" Text="Export to Excel" OnClick="btnExport_Click" />
             <asp:Button ID="btnUpdateRFP" runat="server" class="btn btn-primary" Text="Update RFP List" OnClick="btnUpdateRFP_Click" />
             <%--<a href="New_Investors_Profile.aspx" class="btn btn-primary">Add New Investors</a>

@@ -1,4 +1,4 @@
-﻿<%@ Page Language="C#" AutoEventWireup="true" CodeBehind="FileManage_Investors_Profile_20230904.aspx.cs" Inherits="CRM.FileManage_Investors_Profile" %>
+<%@ Page Language="C#" AutoEventWireup="true" CodeBehind="FileManage_Investors_Profile_20230904.aspx.cs" Inherits="CRM.FileManage_Investors_Profile" %>
 
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml">
@@ -73,10 +73,11 @@
         <nav class="navbar navbar-inverse">
             <div class="container-fluid">
                 <div class="navbar-header">
-                    <a class="navbar-brand" href="Home.aspx">CRM v1.0</a>
+                    <a class="navbar-brand" href="Dashboard.aspx">CRM v1.0</a>
                 </div>
                 <ul class="nav navbar-nav">
-                    <li class="active"><a href="#">Home</a></li>
+                    
+                            <li><a href="Dashboard.aspx">Dashboard</a></li>
                     <li class="dropdown">
                         <a class="dropdown-toggle" data-toggle="dropdown" href="#">Profiles
                             <span class="caret"></span></a>

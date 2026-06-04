@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Configuration;
 using System.Data.SqlClient;
@@ -12,13 +12,13 @@ using System.Text;
 
 namespace CRM
 {
-    public partial class List_Investors_Profile : System.Web.UI.Page
+    public partial class List_Investors_Profile_V2 : System.Web.UI.Page
     {
         protected void Page_Load(object sender, EventArgs e)
         {           
             if (!IsPostBack)
             {
-                lblUsername.Text = Session["Username"].ToString();
+                lblUsername.Text = Convert.ToString(Session["Username"]);
                 if (string.IsNullOrEmpty(lblUsername.Text)) {
                     Response.Redirect("Default.aspx");
                 }
@@ -32,7 +32,7 @@ namespace CRM
             {
                 con.Open();
                 // Create a new SQL command
-                SqlCommand cmd = new SqlCommand("SELECT Id, Company_Name, PIC, Company_Country, Land_Size_Required, Building_Size, Company_Status, Company_Industry_Type, Investment_Type, Leads_Status FROM Investors_Profile Order by Company_Name ASC", con);
+                SqlCommand cmd = new SqlCommand("SELECT Id, Company_Name, Date_Inquiry, PIC, Company_Country, Land_Size_Required, Building_Size, Company_Status, Company_Industry_Type, Investment_Type, Leads_Status, Investors_Decision_Making, Investors_Internal_Status FROM Investors_Profile Order by Company_Name ASC", con);
                 // Execute the command and retrieve the results
                 DataTable dt = new DataTable();
                 dt.Load(cmd.ExecuteReader());
@@ -45,25 +45,47 @@ namespace CRM
         }
         protected void GvActivities_RowDeleting(object sender, GridViewDeleteEventArgs e)
         {
-            // Get the selected record's ID
-            int selectedId = (int)gvActivities.DataKeys[e.RowIndex].Value;
-            // Create a new SQL connection
-            using (SqlConnection con = new SqlConnection(ConfigurationManager.ConnectionStrings["CRMConnectionString"].ConnectionString))
+            try
             {
-                // Open the connection
-                con.Open();
-                // Create a new SQL command
-                SqlCommand cmd = new SqlCommand("DELETE FROM Investors_Profile WHERE Id = @Id", con);
-                cmd.Parameters.AddWithValue("@Id", selectedId);
-                // Execute the command
-                cmd.ExecuteNonQuery();
-                // Close the connection
-                con.Close();
+                // Get the selected record's ID and Company Name
+                int selectedId = (int)gvActivities.DataKeys[e.RowIndex].Values["Id"];
+                string companyName = gvActivities.DataKeys[e.RowIndex].Values["Company_Name"].ToString();
+                
+                // Create a new SQL connection
+                using (SqlConnection con = new SqlConnection(ConfigurationManager.ConnectionStrings["CRMConnectionString"].ConnectionString))
+                {
+                    // Open the connection
+                    con.Open();
+                    
+                    // 1. Delete associated activities first to avoid foreign key constraints
+                    // Note: The relationship seems to be based on Company_Name
+                    SqlCommand cmdActivities = new SqlCommand("DELETE FROM Investors_Activities WHERE Company_Name = @CompanyName", con);
+                    cmdActivities.Parameters.AddWithValue("@CompanyName", companyName);
+                    cmdActivities.ExecuteNonQuery();
+
+                    // 2. Delete the investor profile
+                    SqlCommand cmd = new SqlCommand("DELETE FROM Investors_Profile WHERE Id = @Id", con);
+                    cmd.Parameters.AddWithValue("@Id", selectedId);
+                    
+                    // Execute the command
+                    cmd.ExecuteNonQuery();
+                    
+                    // Close the connection
+                    con.Close();
+                }
+                
+                // Bind the Gridview again to refresh the data
+                BindGridview();
+                
+                // Show a notification to the user
+                ScriptManager.RegisterStartupScript(this, this.GetType(), "alert", "alert('Record Deleted');", true);
             }
-            // Bind the Gridview again to refresh the data
-            BindGridview();
-            // Show a notification to the user
-            ScriptManager.RegisterStartupScript(this, this.GetType(), "alert", "alert('Record deleted successfully');", true);
+            catch (Exception ex)
+            {
+                // Show error message if deletion fails
+                string errorMsg = ex.Message.Replace("'", "\\'");
+                ScriptManager.RegisterStartupScript(this, this.GetType(), "alert", "alert('Error deleting record: " + errorMsg + "');", true);
+            }
         }
         private void BindGridview()
         {
@@ -73,7 +95,7 @@ namespace CRM
                 // Open the connection
                 con.Open();
                 // Create a new SQL command
-                SqlCommand cmd = new SqlCommand("SELECT Id, Company_Name, Company_Country, Land_Size_Required, Building_Size, Company_Status, Company_Industry_Type, Investment_Type, Leads_Status FROM Investors_Profile Order by Company_Name ASC", con);
+                SqlCommand cmd = new SqlCommand("SELECT Id, Company_Name, Date_Inquiry, Company_Country, Land_Size_Required, Building_Size, Company_Status, Company_Industry_Type, Investment_Type, Leads_Status, PIC, Investors_Decision_Making, Investors_Internal_Status FROM Investors_Profile Order by Company_Name ASC", con);
                 // Create a new SQL data adapter
                 SqlDataAdapter da = new SqlDataAdapter(cmd);
                 // Create a new data table
@@ -148,7 +170,7 @@ namespace CRM
                 //Open the connection
                 conn.Open();
                 //Create a new SqlCommand to retrieve the data
-                using (SqlCommand cmd = new SqlCommand("SELECT Id, Company_Name, PIC, Company_Country, Land_Size_Required, Building_Size, Company_Status, Company_Industry_Type, Investment_Type, Leads_Status FROM Investors_Profile Order by Company_Name ASC", conn))
+                using (SqlCommand cmd = new SqlCommand("SELECT Id, Company_Name, Date_Inquiry, PIC, Company_Country, Land_Size_Required, Building_Size, Company_Status, Company_Industry_Type, Investment_Type, Leads_Status, Investors_Decision_Making, Investors_Internal_Status FROM Investors_Profile Order by Company_Name ASC", conn))
                 {
                     //Create a new SqlDataAdapter to fill the DataTable with the retrieved data
                     using (SqlDataAdapter da = new SqlDataAdapter(cmd))
@@ -256,6 +278,9 @@ namespace CRM
                     break;
                 case "Cold":
                     cssClass = "cold-status";
+                    break;
+                    case "Completed":
+                    cssClass = "green-status";
                     break;
                 case "Greenfield":
                     cssClass = "green-status";

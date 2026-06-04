@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Configuration;
 using System.Data;
@@ -19,7 +19,11 @@ namespace CRM
         {
             if (!IsPostBack)
             {
-                lblUsername.Text = Session[name: "Username"].ToString();
+                lblUsername.Text = Convert.ToString(Session["Username"]);
+                if (string.IsNullOrEmpty(lblUsername.Text))
+                {
+                    Response.Redirect("Default.aspx");
+                }
                 if (Request.QueryString["ID"] != null)
                 {
                     int id = Convert.ToInt32(Request.QueryString["ID"]);
@@ -123,14 +127,14 @@ namespace CRM
                     cmd.Parameters.AddWithValue("@RFP_Date_Start", txtRFPDateStart.Text);
                     cmd.Parameters.AddWithValue("@RFP_Date_End", txtRFPDateEnd.Text);
                     cmd.Parameters.AddWithValue("@RFP_Description", txtRFPDescription.Text);
-                    cmd.Parameters.AddWithValue("@UpdatedBy", Session["Username"].ToString());
-                    cmd.Parameters.AddWithValue("@Ip_Address", Session["Ip_Address"].ToString());
+                    cmd.Parameters.AddWithValue("@UpdatedBy", Convert.ToString(Session["Username"]));
+                    cmd.Parameters.AddWithValue("@Ip_Address", Convert.ToString(Session["Ip_Address"]));
                     cmd.ExecuteNonQuery();
                     con.Close();
                 }
             }
             //Debug.Print(Session["FromLocation"].ToString());
-            if (Session["FromLocation"].ToString() == "List_RFP")
+            if (Convert.ToString(Session["FromLocation"]) == "List_RFP")
             {
                 Response.Redirect("List_RFP.aspx");
             }

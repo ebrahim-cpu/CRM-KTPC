@@ -1,4 +1,4 @@
-﻿<%@ Page Language="C#" AutoEventWireup="true" CodeBehind="Investors_Profile.aspx.cs" Inherits="CRM.Investors_Profile" %>
+<%@ Page Language="C#" AutoEventWireup="true" CodeBehind="Investors_Profile.aspx.cs" Inherits="CRM.Investors_Profile" %>
 
 <!DOCTYPE html>
 

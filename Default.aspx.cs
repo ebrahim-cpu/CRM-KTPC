@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Configuration;
 using System.Data.SqlClient;
@@ -46,8 +46,9 @@ namespace CRM
         protected void btnLogin_Click(object sender, EventArgs e)
         {
             var Kebenaran = new FormsAuth.LdapAuthentication("LDAP://KHTP");
-            Session["Username"] = txtUsername.Text; // untuk run local
-            bool PenggunaSah = true; // untuk run local
+            bool PenggunaSah = Kebenaran.IsAuthenticated("KHTP", txtUsername.Text.Trim(), txtPassword.Text.Trim());
+            //bool PenggunaSah = (txtUsername.Text == "ibrahim" && txtPassword.Text == "crm44351"); 
+            
             Label1.Text = PenggunaSah.ToString();
             Label3.Text = PenggunaSah.ToString();
             if (PenggunaSah)
@@ -72,12 +73,12 @@ namespace CRM
                         AuditTrailAkses();
                         if ((bool)(Session["IsAdmin"]))
                         {
-                            Response.Redirect("Home.aspx"); // Access approved.
+                            Response.Redirect("Dashboard.aspx"); // Access approved.
                         }
                         else
                         if ((bool)(Session["IsUser"]))
                         {
-                            Response.Redirect("Home.aspx"); // Access approved.
+                            Response.Redirect("Dashboard.aspx"); // Access approved.
                         }
                         else
                         {

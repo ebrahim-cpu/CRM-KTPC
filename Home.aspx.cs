@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
@@ -14,7 +14,7 @@ namespace CRM
         {
             if (!IsPostBack)
             {
-                lblUsername.Text = Session["Username"].ToString();
+                lblUsername.Text = Convert.ToString(Session["Username"]);
                 if (string.IsNullOrEmpty(lblUsername.Text))
                 {
                     Response.Redirect("Default.aspx");

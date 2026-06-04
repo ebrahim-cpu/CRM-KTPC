@@ -1,4 +1,4 @@
-﻿<%@ Page Language="C#" AutoEventWireup="true" CodeBehind="Edit_Investors_Activities.aspx.cs" Inherits="CRM.Edit_Investors_Activities" %>
+<%@ Page Language="C#" AutoEventWireup="true" CodeBehind="Edit_Investors_Activities.aspx.cs" Inherits="CRM.Edit_Investors_Activities" %>
 
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml">
@@ -215,7 +215,8 @@
                     <a class="navbar-brand" href="#">CRM v1.0</a>
                 </div>
                 <ul class="nav navbar-nav">
-                    <li class="active"><a href="Home.aspx">Home</a></li>
+                    
+                            <li><a href="Dashboard.aspx">Dashboard</a></li>
                     <li class="dropdown">
                         <a class="dropdown-toggle" data-toggle="dropdown" href="#">Profiles
                             <span class="caret"></span></a>

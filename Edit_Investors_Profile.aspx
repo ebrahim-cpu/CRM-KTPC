@@ -1,5 +1,5 @@
-﻿<%@ Page Language="C#" AutoEventWireup="true" CodeBehind="Edit_Investors_Profile.aspx.cs"
-    Inherits="CRM.Edit_Investors_Profile" %>
+<%@ Page Language="C#" AutoEventWireup="true" CodeFile="Edit_Investors_Profile.aspx.cs"
+    Inherits="CRM.Edit_Investors_Profile_V2" %>
 
     <!DOCTYPE html>
     <html xmlns="http://www.w3.org/1999/xhtml">
@@ -59,6 +59,7 @@
                 -webkit-user-select: none;
                 -moz-user-select: none;
                 -ms-user-select: none;
+                user-select: none;
             }
 
             .toggle-switch input[type="checkbox"] {
@@ -135,8 +136,6 @@
                 padding: 3px;
                 text-align: center;
             }
-
-            }
         </style>
         <style>
             .photo-container {
@@ -172,46 +171,13 @@
         <script>
             /*Line 122*/
             function validateCompanyName() {
-                var nameTextBox = document.getElementById("txtCompanyName");
-                if (nameTextBox.value.trim() == "") {
+                var nameTextBox = document.getElementById("<%= txtCompanyName.ClientID %>");
+                if (nameTextBox && nameTextBox.value.trim() == "") {
                     alert("Company Name cannot be blank.");
                     nameTextBox.focus();
                     return false;
                 }
                 return true;
-            }
-            /*Line 277*/
-            function updateTextboxInvestorStatus() {
-                var dropdown = document.getElementById("<%= ddlInvestorStatus.ClientID %>");
-                var selectedValue = dropdown.value;
-            <%-- var textbox = document.getElementById("<%= txtInvestorStatus.ClientID %>"); 
-                textbox.value = selectedValue; --%>
-        }
-            /*Line 180*/
-            function updateTextboxPromotedSector() {
-                var dropdown = document.getElementById("<%= ddlPIC.ClientID %>");
-                var selectedValue = dropdown.value;
-            <%-- var textbox = document.getElementById("<%= txtPromotedSector.ClientID %>");
-                textbox.value = selectedValue; --%>
-        }
-            /*Line 187*/
-            function updateTextboxInvestmentType() {
-                var dropdown = document.getElementById("<%= ddlInvestmentType.ClientID %>");
-                var selectedValue = dropdown.value;
-            <%-- var textbox = document.getElementById("<%= txtInvestmentType.ClientID %>");
-                textbox.value = selectedValue; --%>
-        }
-            /*Line 148*/
-            function updateTextboxCountry() {
-                var dropdown = document.getElementById("<%= ddlCountry.ClientID %>");
-                var selectedValue = dropdown.value;
-
-            }
-            function copyData() {
-                // Get the selected value from the select element
-                const selectedValue = document.getElementById("statusSelect").value;
-                // Set the selected value as the value of the textbox
-                document.getElementById('<%=txtLeadStatus.ClientID %>').value = selectedValue;
             }
         </script>
     </head>
@@ -227,7 +193,8 @@
                                 <a class="navbar-brand" href="#">CRM v1.0</a>
                             </div>
                             <ul class="nav navbar-nav">
-                                <li class="active"><a href="Home.aspx">Home</a></li>
+                                
+                            <li><a href="Dashboard.aspx">Dashboard</a></li>
                                 <li class="dropdown">
                                     <a class="dropdown-toggle" data-toggle="dropdown" href="#">Profiles
                                         <span class="caret"></span></a>
@@ -446,15 +413,15 @@
                                 <asp:Label for="txtProposedTotalInvestment" runat="server"
                                     Text="Proposed Total Investment (RM)"></asp:Label>
                                 <asp:TextBox ID="txtProposedTotalInvestment" runat="server" CssClass="form-control"
-                                    placeholder="Proposed Total Investment" MaxLength="8" type="number" min="0"
-                                    max="10000000" step="0.01"></asp:TextBox>
+                                    placeholder="Proposed Total Investment" MaxLength="20" type="number" min="0"
+                                    max="1000000000000000000" step="1000"></asp:TextBox>
                             </div>
                             <div class="form-group">
                                 24.
                                 <asp:Label for="txtManPowerRequirement" runat="server" Text="Manpower Requirement">
                                 </asp:Label>
                                 <asp:TextBox ID="txtManPowerRequirement" runat="server" CssClass="form-control"
-                                    placeholder="Manpower Requirement" MaxLength="7" type="number" min="0" max="1000000"
+                                    placeholder="Manpower Requirement" MaxLength="9" type="number" min="0" max="100000000"
                                     step="1"></asp:TextBox>
                             </div>
                             <div class="form-group">
@@ -511,16 +478,19 @@
                             <b>H. Leads Status</b>
                             <hr class="rounded" />
                             <div class="form-group">
-                                <button type="button" class="btn btn-primary" onclick="openModal()">Change Leads
-                                    Status</button>
+                                30.
+                                <asp:Label for="ddlLeadsStatus" runat="server" Text="Leads Status"></asp:Label>
+                                <asp:DropDownList ID="ddlLeadsStatus" runat="server" ClientIDMode="Static"
+                                    CssClass="form-control" onchange="updateStatusImage()">
+                                    <asp:ListItem Value="Hot">Hot</asp:ListItem>
+                                    <asp:ListItem Value="Warm">Warm</asp:ListItem>
+                                    <asp:ListItem Value="Cold">Cold</asp:ListItem>
+                                    <asp:ListItem Value="Completed">Completed</asp:ListItem>
+                                </asp:DropDownList>
                             </div>
                             <div class="form-group">
-                                <div class="form-group">
-                                    30.
-                                    <asp:Label for="txtLeadStatus" runat="server" Text="Leads Status"></asp:Label>
-                                    <asp:TextBox ID="txtLeadStatus" runat="server" CssClass="form-control"
-                                        placeholder="Leads Status" ReadOnly="true"></asp:TextBox>
-                                </div>
+                                <asp:Image ID="statusImage" runat="server" Width="100" ClientIDMode="Static"
+                                    alt="" />
                             </div>
                         </div>
                         <br />
@@ -535,6 +505,26 @@
                                     <asp:DropDownList ID="ddlPersonInCharge" runat="server" CssClass="form-control"
                                         AutoPostBack="false"></asp:DropDownList>
                                 </div>
+                            </div>
+                        </div>
+                        <div class="col-sm-6">
+                            <b>J. Decision Making & Internal Status</b>
+                            <hr class="rounded" />
+                            <div class="form-group">
+                                32.
+                                <asp:Label for="txtInvestorsDecisionMaking" runat="server"
+                                    Text="Investors Decision Making"></asp:Label>
+                                <asp:TextBox ID="txtInvestorsDecisionMaking" runat="server" CssClass="form-control"
+                                    placeholder="Investors Decision Making" TextMode="MultiLine" Rows="3"
+                                    MaxLength="500"></asp:TextBox>
+                            </div>
+                            <div class="form-group">
+                                33.
+                                <asp:Label for="txtInvestorsInternalStatus" runat="server"
+                                    Text="Investors Internal Status"></asp:Label>
+                                <asp:TextBox ID="txtInvestorsInternalStatus" runat="server" CssClass="form-control"
+                                    placeholder="Investors Internal Status" TextMode="MultiLine" Rows="3"
+                                    MaxLength="500"></asp:TextBox>
                             </div>
                         </div>
                         <br />
@@ -636,43 +626,6 @@
                             </div>
                         </div>
                         <!-- End Modal Decision -->
-                        <!-- Start Modal Leads Status -->
-                        <div class="modal fade" id="myModalLeadsStatus" role="dialog">
-                            <div class="modal-dialog" role="document">
-                                <!-- Start Modal content Leads Status-->
-                                <div class="modal-content">
-                                    <div class="modal-header">
-                                        <button type="button" class="close" data-dismiss="modal"
-                                            aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                                        <h4 class="modal-title" id="myModalLabel">Select Leads Status</h4>
-                                    </div>
-                                    <div class="modal-body">
-                                        <div class="form-group">
-                                            <label for="statusSelect">Change Status:</label>
-                                            <asp:DropDownList ID="statusSelect" runat="server" onchange="copyData()">
-                                                <asp:ListItem Value="Hot">Hot</asp:ListItem>
-                                                <asp:ListItem Value="Warm">Warm</asp:ListItem>
-                                                <asp:ListItem Value="Cold">Cold</asp:ListItem>
-                                            </asp:DropDownList>
-                                            <br />
-                                        </div>
-                                        <div class="form-group">
-                                            <asp:Image ID="statusImage" runat="server" Width="200" Height="300"
-                                                alt="" />
-                                        </div>
-                                    </div>
-                                    <div class="modal-footer">
-                                        <button type="button" class="btn btn-default"
-                                            data-dismiss="modal">Close</button>
-                                        <asp:Button ID="Button2" runat="server" Text="Submit" Style="display: none;"
-                                            OnClick="BtnSubmit_Click" />
-                                    </div>
-                                </div>
-                                <!-- End Modal content Leads Status-->
-                            </div>
-                            <asp:HiddenField ID="hfLeadsStatus" runat="server" />
-                        </div>
-                        <!-- End Modal Leads Status -->
                         <!-- UPLOAD DOWNLOAD SECTION START -->
                         <div>
                             <div class="col-sm-12">
@@ -731,28 +684,28 @@
                 <!-- Lightbox ada issue dengan bootstrap popup modal -->
                 <script>
                     $(document).ready(function () {
-                        $("#statusSelect").on("change", function () {
-                            var selectedStatus = $(this).val();
-                            switch (selectedStatus) {
-                                case "Hot":
-                                    $("#statusImage").attr("src", "hot.png");
-                                    break;
-                                case "Warm":
-                                    $("#statusImage").attr("src", "warm.png");
-                                    break;
-                                case "Cold":
-                                    $("#statusImage").attr("src", "cold.png");
-                                    break;
-                                default:
-                                    $("#statusImage").attr("src", "cold.png");
-                                    break;
-                            }
-                            $("#hfLeadsStatus").val(selectedStatus);
-                        });
+                        updateStatusImage();
                     });
 
-                    function openModal() {
-                        $('#myModalLeadsStatus').modal('show');
+                    function updateStatusImage() {
+                        var selectedStatus = $('#ddlLeadsStatus').val();
+                        switch (selectedStatus) {
+                            case "Hot":
+                                $("#statusImage").attr("src", "hot.png");
+                                break;
+                            case "Warm":
+                                $("#statusImage").attr("src", "warm.png");
+                                break;
+                            case "Cold":
+                                $("#statusImage").attr("src", "cold.png");
+                                break;
+                            case "Completed":
+                                $("#statusImage").attr("src", "completed.png");
+                                break;
+                            default:
+                                $("#statusImage").attr("src", "cold.png");
+                                break;
+                        }
                     }
                 </script>
                 <hr />

@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Configuration;
 using System.Data.SqlClient;
@@ -16,7 +16,11 @@ namespace CRM
     {
         protected void Page_Load(object sender, EventArgs e)
         {
-            lblUsername.Text = Session[name: "Username"].ToString();
+            lblUsername.Text = Convert.ToString(Session["Username"]);
+            if (string.IsNullOrEmpty(lblUsername.Text))
+            {
+                Response.Redirect("Default.aspx");
+            }
             if (!IsPostBack)
             {
                 // Create a new SQL connection

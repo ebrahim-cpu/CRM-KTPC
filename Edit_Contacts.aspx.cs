@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Configuration;
 using System.Data;
@@ -19,10 +19,14 @@ namespace CRM
         {
             if (!IsPostBack)
             {
-                lblUsername.Text = Session["Username"].ToString();
+                lblUsername.Text = Convert.ToString(Session["Username"]);
+                if (string.IsNullOrEmpty(lblUsername.Text)) {
+                    Response.Redirect("Default.aspx");
+                }
                 if (!string.IsNullOrEmpty(Request.QueryString["Id"]))
                 {
                     int contactId = Convert.ToInt32(Request.QueryString["Id"]);
+                    BindIndustrialPark();
                     PopulateContactDetails(contactId);
                     BindGridView(contactId);
                     PopulateContactPhotos(contactId);
@@ -38,7 +42,7 @@ namespace CRM
             string connectionString = ConfigurationManager.ConnectionStrings["CRMConnectionString"].ConnectionString;
             using (SqlConnection con = new SqlConnection(connectionString))
             {
-                string selectQuery = "SELECT Company_Id, Company_Name, Company_Phone, Name, Position, Mobile, Notes " +
+                string selectQuery = "SELECT Company_Id, Company_Name, Company_Phone, Name, Position, Mobile, Notes, industrial_Park_Name " +
                                      "FROM Contacts WHERE Id = @ContactId";
                 using (SqlCommand cmd = new SqlCommand(selectQuery, con))
                 {
@@ -55,6 +59,12 @@ namespace CRM
                         txtPosition.Text = reader["Position"].ToString();
                         txtMobile.Text = reader["Mobile"].ToString();
                         txtNotes.Text = reader["Notes"].ToString();
+
+                        string existingPark = reader["industrial_Park_Name"].ToString();
+                        if (industrialPark_ddl.Items.FindByValue(existingPark) != null)
+                        {
+                            industrialPark_ddl.SelectedValue = existingPark;
+                        }
                     }
                     else
                     {
@@ -111,7 +121,7 @@ namespace CRM
             using (SqlConnection con = new SqlConnection(connectionString))
             {
                 string updateQuery = "UPDATE Contacts SET Company_Name = @CompanyName, Company_Phone = @CompanyPhone, " +
-                                     "Name = @Name, Position = @Position, Mobile = @Mobile, Notes = @Notes " +
+                                     "Name = @Name, Position = @Position, Mobile = @Mobile, Notes = @Notes, industrial_Park_Name = @IndustrialPark " +
                                      "WHERE Id = @ContactId";
                 using (SqlCommand cmd = new SqlCommand(updateQuery, con))
                 {
@@ -121,6 +131,7 @@ namespace CRM
                     cmd.Parameters.AddWithValue("@Position", position);
                     cmd.Parameters.AddWithValue("@Mobile", mobile);
                     cmd.Parameters.AddWithValue("@Notes", notes);
+                    cmd.Parameters.AddWithValue("@IndustrialPark", industrialPark_ddl != null && industrialPark_ddl.SelectedItem != null && industrialPark_ddl.SelectedItem.Value != "0" ? industrialPark_ddl.SelectedItem.Text : "");
                     cmd.Parameters.AddWithValue("@ContactId", contactId);
                     con.Open();
                     cmd.ExecuteNonQuery();
@@ -412,6 +423,30 @@ namespace CRM
                 GridView1.DataSource = dt;
                 GridView1.DataBind();
             }
+        }
+
+        private void BindIndustrialPark()
+        {
+            try
+            {
+                using (SqlConnection con = new SqlConnection(ConfigurationManager.ConnectionStrings["CRMConnectionString"].ConnectionString))
+                {
+                    using (SqlCommand cmd = new SqlCommand("SELECT Industrial_Park_Name FROM Industrial_Park ORDER BY Industrial_Park_Name ASC", con))
+                    {
+                        SqlDataAdapter da = new SqlDataAdapter(cmd);
+                        DataTable dt = new DataTable();
+                        con.Open();
+                        da.Fill(dt);
+                        industrialPark_ddl.DataSource = dt;
+                        industrialPark_ddl.DataTextField = "Industrial_Park_Name";
+                        industrialPark_ddl.DataValueField = "Industrial_Park_Name";
+                        industrialPark_ddl.DataBind();
+                        con.Close();
+                    }
+                }
+                industrialPark_ddl.Items.Insert(0, new ListItem("--Select--", "0"));
+            }
+            catch { }
         }
     }
 }

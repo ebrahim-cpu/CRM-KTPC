@@ -1,4 +1,4 @@
-﻿<%@ Page Language="C#" AutoEventWireup="true" CodeBehind="DisplayPhoto2.aspx.cs" Inherits="CRM.DisplayPhoto2" EnableViewState="true" %>
+<%@ Page Language="C#" AutoEventWireup="true" CodeBehind="DisplayPhoto2.aspx.cs" Inherits="CRM.DisplayPhoto2" EnableViewState="true" %>
 
 <!DOCTYPE html>
 

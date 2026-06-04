@@ -1,4 +1,4 @@
-﻿<%@ Page Language="C#" AutoEventWireup="true" CodeBehind="New_Contacts.aspx.cs" Inherits="CRM.New_Contacts" %>
+<%@ Page Language="C#" AutoEventWireup="true" CodeBehind="New_Contacts.aspx.cs" Inherits="CRM.New_Contacts" %>
 
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml">
@@ -17,7 +17,8 @@
                     <a class="navbar-brand" href="#">CRM v1.0</a>
                 </div>
                 <ul class="nav navbar-nav">
-                    <li class="active"><a href="Home.aspx">Home</a></li>
+                    
+                            <li><a href="Dashboard.aspx">Dashboard</a></li>
                     <li class="dropdown">
                         <a class="dropdown-toggle" data-toggle="dropdown" href="#">Profiles
                             <span class="caret"></span></a>
@@ -62,6 +63,11 @@
                 <div class="form-group">
                     <asp:Label for="ddlCompanyId" runat="server" Text="Select Company"></asp:Label>
                     <asp:DropDownList ID="ddlCompanyId" runat="server" CssClass="form-control" AutoPostBack="True" OnSelectedIndexChanged="DdlCompanyId_SelectedIndexChanged">
+                    </asp:DropDownList>
+                </div>
+                <div class="form-group">
+                    <asp:Label for="industrialPark_ddl" runat="server" Text="0. Industrial Park"></asp:Label>
+                    <asp:DropDownList ID="industrialPark_ddl" runat="server" CssClass="form-control">
                     </asp:DropDownList>
                 </div>
                 <div class="form-group">

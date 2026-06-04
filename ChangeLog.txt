@@ -1,6 +1,39 @@
 --------
-20260306
+20260519
 
+
+--------
+20260421
+Update total investment column to 20 length. Create dgn Edit.
+
+--------
+20260420
+Tukar drop down nama.
+Update database sahaja.
+
+--------
+20260330
+
+--------
+20260324
+List_Investors_Profile
+
+ALTER TABLE Contacts
+ADD industrial_Park_Name VARCHAR(50) NULL;
+https://crm.khtp.com.my/Dashboard
+
+--------
+20260316
+Upload script to server.
+New hot, warm, cold, closed icons
+Test Result:
+
+--------
+20260310
+ALTER TABLE Investors_Profile
+ADD Investors_Decision_Making VARCHAR(500) NULL,
+    Investors_Internal_Status VARCHAR(500) NULL;
+Columns to Forms Added.
 
 --------
 20260303

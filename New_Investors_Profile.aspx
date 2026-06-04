@@ -1,11 +1,11 @@
-﻿<%@ Page Language="C#" AutoEventWireup="true" CodeBehind="New_Investors_Profile.aspx.cs"
-    Inherits="CRM.New_Investors_Profile" %>
+<%@ Page Language="C#" AutoEventWireup="true" CodeFile="New_Investors_Profile.aspx.cs"
+    Inherits="CRM.New_Investors_Profile_V2" %>
 
     <!DOCTYPE html>
     <html xmlns="http://www.w3.org/1999/xhtml">
 
     <head runat="server">
-        <title>New Investors</title>
+        <title>Update Investors</title>
         <link href="Content/bootstrap.min.css" rel="stylesheet" />
         <script src="Scripts/jquery-3.4.1.min.js"></script>
         <script src="Scripts/bootstrap.min.js"></script>
@@ -139,8 +139,8 @@
             });
             /*Line 84 271*/
             function validateCompanyName() {
-                var nameTextBox = document.getElementById("txtCompanyName");
-                if (nameTextBox.value.trim() == "") {
+                var nameTextBox = document.getElementById("<%= txtCompanyName.ClientID %>");
+                if (nameTextBox && nameTextBox.value.trim() == "") {
                     alert("Company Name cannot be blank.");
                     nameTextBox.focus();
                     return false;
@@ -161,6 +161,9 @@
                     case "Cold":
                         $("#statusImage").attr("src", "cold.png");
                         break;
+                    case "Completed":
+                        $("#statusImage").attr("src", "completed.png"); // Default to cold for now if completed.png is missing
+                        break;
                     default:
                         $("#statusImage").attr("src", "cold.png");
                         break;
@@ -178,7 +181,8 @@
                             <a class="navbar-brand" href="#">CRM v1.0</a>
                         </div>
                         <ul class="nav navbar-nav">
-                            <li class="active"><a href="Home.aspx">Home</a></li>
+                            
+                            <li><a href="Dashboard.aspx">Dashboard</a></li>
                             <li class="dropdown">
                                 <a class="dropdown-toggle" data-toggle="dropdown" href="#">Profiles
                                     <span class="caret"></span></a>
@@ -398,15 +402,15 @@
                             <asp:Label for="txtProposedTotalInvestment" runat="server"
                                 Text="Proposed Total Investment (RM)"></asp:Label>
                             <asp:TextBox ID="txtProposedTotalInvestment" runat="server" CssClass="form-control"
-                                placeholder="Proposed Total Investment" MaxLength="12" type="number" min="0"
-                                max="100000000000" step="0.01"></asp:TextBox>
+                                placeholder="Proposed Total Investment" MaxLength="20" type="number" min="0"
+                                max="1000000000000000000" step="1000"></asp:TextBox>
                         </div>
                         <div class="form-group">
                             24.
                             <asp:Label for="txtManPowerRequirement" runat="server" Text="Manpower Requirement">
                             </asp:Label>
                             <asp:TextBox ID="txtManPowerRequirement" runat="server" CssClass="form-control"
-                                placeholder="Manpower Requirement" MaxLength="7" type="number" min="0" max="1000000"
+                                placeholder="Manpower Requirement" MaxLength="9" type="number" min="0" max="100000000"
                                 step="1"></asp:TextBox>
                         </div>
                         <div class="form-group">
@@ -472,10 +476,31 @@
                                 <asp:ListItem Value="Hot">Hot</asp:ListItem>
                                 <asp:ListItem Value="Warm">Warm</asp:ListItem>
                                 <asp:ListItem Value="Cold">Cold</asp:ListItem>
+                                <asp:ListItem Value="Completed">Completed</asp:ListItem>
                             </asp:DropDownList>
                         </div>
                         <div class="form-group">
-                            <img id="statusImage" width="200" height="300" src="cold.png" alt="" />
+                            <img id="statusImage" width="100" src="cold.png" alt="" />
+                        </div>
+                    </div>
+                    <div class="col-sm-6">
+                        <b>I. Decision Making & Internal Status</b>
+                        <hr class="rounded" />
+                        <div class="form-group">
+                            31.
+                            <asp:Label for="txtInvestorsDecisionMaking" runat="server" Text="Investors Decision Making">
+                            </asp:Label>
+                            <asp:TextBox ID="txtInvestorsDecisionMaking" runat="server" CssClass="form-control"
+                                placeholder="Investors Decision Making" TextMode="MultiLine" Rows="3" MaxLength="500">
+                            </asp:TextBox>
+                        </div>
+                        <div class="form-group">
+                            32.
+                            <asp:Label for="txtInvestorsInternalStatus" runat="server" Text="Investors Internal Status">
+                            </asp:Label>
+                            <asp:TextBox ID="txtInvestorsInternalStatus" runat="server" CssClass="form-control"
+                                placeholder="Investors Internal Status" TextMode="MultiLine" Rows="3" MaxLength="500">
+                            </asp:TextBox>
                         </div>
                     </div>
                     <br />

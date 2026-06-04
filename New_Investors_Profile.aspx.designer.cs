@@ -11,7 +11,7 @@ namespace CRM
 {
 
 
-    public partial class New_Investors_Profile
+    public partial class New_Investors_Profile_V2
     {
 
         /// <summary>
@@ -328,6 +328,24 @@ namespace CRM
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.DropDownList ddlLeadsStatus;
+        
+        /// <summary>
+        /// txtInvestorsDecisionMaking control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.TextBox txtInvestorsDecisionMaking;
+
+        /// <summary>
+        /// txtInvestorsInternalStatus control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.TextBox txtInvestorsInternalStatus;
 
         /// <summary>
         /// lblMessage control.

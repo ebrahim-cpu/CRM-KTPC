@@ -1,4 +1,4 @@
-﻿<%@ Page Language="C#" AutoEventWireup="true" CodeBehind="DownloadFiles.aspx.cs" Inherits="CRM.DownloadFiles" %>
+<%@ Page Language="C#" AutoEventWireup="true" CodeBehind="DownloadFiles.aspx.cs" Inherits="CRM.DownloadFiles" %>
 
 <!DOCTYPE html>
 

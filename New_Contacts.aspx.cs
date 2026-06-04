@@ -1,6 +1,7 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Configuration;
+using System.Data;
 using System.Data.SqlClient;
 using System.Linq;
 using System.Web;
@@ -15,6 +16,7 @@ namespace CRM
         {
             if (!IsPostBack) 
             {
+                BindIndustrialPark();
                 // Check if the "Id" query string parameter is provided.
                 if (!string.IsNullOrEmpty(Request.QueryString["Id"]))
                 {
@@ -43,8 +45,8 @@ namespace CRM
             // Create a new SqlConnection and SqlCommand to execute the INSERT query.
             using (SqlConnection con = new SqlConnection(connectionString))
             {
-                string insertQuery = "INSERT INTO Contacts (Company_Id, Company_Name, Company_Phone, Name, Position, Mobile, Notes) " +
-                                     "VALUES (@CompanyId, @CompanyName, @CompanyPhone, @Name, @Position, @Mobile, @Notes)";
+                string insertQuery = "INSERT INTO Contacts (Company_Id, Company_Name, Company_Phone, Name, Position, Mobile, Notes, industrial_Park_Name) " +
+                                     "VALUES (@CompanyId, @CompanyName, @CompanyPhone, @Name, @Position, @Mobile, @Notes, @IndustrialPark)";
                 using (SqlCommand cmd = new SqlCommand(insertQuery, con))
                 {
                     // Add parameters and their values.
@@ -55,6 +57,7 @@ namespace CRM
                     cmd.Parameters.AddWithValue("@Position", txtPosition.Text);
                     cmd.Parameters.AddWithValue("@Mobile", txtMobile.Text);
                     cmd.Parameters.AddWithValue("@Notes", txtNotes.Text);
+                    cmd.Parameters.AddWithValue("@IndustrialPark", industrialPark_ddl != null && industrialPark_ddl.SelectedItem != null && industrialPark_ddl.SelectedItem.Value != "0" ? industrialPark_ddl.SelectedItem.Text : "");
                     // Open the connection and execute the query.
                     con.Open();
                     cmd.ExecuteNonQuery();
@@ -147,6 +150,30 @@ namespace CRM
             txtCompanyName.Text = GetCompanyNameById(selectedCompanyId);
             txtCompanyName.Text = ddlCompanyId.SelectedItem.Text;
             txtCompanyId.Text = ddlCompanyId.SelectedItem.Value.ToString();
+        }
+
+        private void BindIndustrialPark()
+        {
+            try
+            {
+                using (SqlConnection con = new SqlConnection(ConfigurationManager.ConnectionStrings["CRMConnectionString"].ConnectionString))
+                {
+                    using (SqlCommand cmd = new SqlCommand("SELECT Industrial_Park_Name FROM Industrial_Park ORDER BY Industrial_Park_Name ASC", con))
+                    {
+                        SqlDataAdapter da = new SqlDataAdapter(cmd);
+                        DataTable dt = new DataTable();
+                        con.Open();
+                        da.Fill(dt);
+                        industrialPark_ddl.DataSource = dt;
+                        industrialPark_ddl.DataTextField = "Industrial_Park_Name";
+                        industrialPark_ddl.DataValueField = "Industrial_Park_Name";
+                        industrialPark_ddl.DataBind();
+                        con.Close();
+                    }
+                }
+                industrialPark_ddl.Items.Insert(0, new ListItem("--Select--", "0"));
+            }
+            catch { }
         }
     }
 }

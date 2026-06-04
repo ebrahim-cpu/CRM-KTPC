@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Configuration;
 using System.Data.SqlClient;
@@ -18,7 +18,7 @@ namespace CRM
         {
             if (!IsPostBack)
             {
-                lblUsername.Text = Session["Username"].ToString();
+                lblUsername.Text = Convert.ToString(Session["Username"]);
                 if (string.IsNullOrEmpty(lblUsername.Text))
                 {
                     Response.Redirect("Default.aspx");
@@ -86,9 +86,9 @@ namespace CRM
                 cmd.Parameters.AddWithValue("@RFP_Date_Start", txtRFPDateStart.Text);
                 cmd.Parameters.AddWithValue("@RFP_Date_End", txtRFPDateEnd.Text);
                 cmd.Parameters.AddWithValue("@RFP_Description", txtRFPDescription.Text);
-                cmd.Parameters.AddWithValue("@Createdby", Session["Username"].ToString());
-                cmd.Parameters.AddWithValue("@Updatedby", Session["Username"].ToString());
-                cmd.Parameters.AddWithValue("@Ip_Address", Session["Ip_Address"].ToString());
+                cmd.Parameters.AddWithValue("@Createdby", Convert.ToString(Session["Username"]));
+                cmd.Parameters.AddWithValue("@Updatedby", Convert.ToString(Session["Username"]));
+                cmd.Parameters.AddWithValue("@Ip_Address", Convert.ToString(Session["Ip_Address"]));
                 id = Convert.ToInt32(cmd.ExecuteScalar());
                 // Execute the SQL command
                 // int rowsInserted = cmd.ExecuteNonQuery();

@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Configuration;
 using System.Data.SqlClient;
@@ -41,10 +41,10 @@ namespace CRM
                     con.Close();
                 }
                 displayAll();
-                if (string.IsNullOrEmpty(lblUsername.Text))
-                {
-                    Response.Redirect("Default.aspx");
-                }
+            }
+            if (string.IsNullOrEmpty(lblUsername.Text))
+            {
+                Response.Redirect("Default.aspx");
             }
         }
         protected void ddlCompanyName_SelectedIndexChanged(object sender, EventArgs e)

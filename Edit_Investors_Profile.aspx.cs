@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Configuration;
 using System.Data;
@@ -16,13 +16,20 @@ using System.Web.UI.WebControls;
 
 namespace CRM
 {
-    public partial class Edit_Investors_Profile : System.Web.UI.Page
+    public partial class Edit_Investors_Profile_V2 : System.Web.UI.Page
     {
         protected void Page_Load(object sender, EventArgs e)
         {
             if (!IsPostBack)
             {
-                lblUsername.Text = Session[name: "Username"].ToString();
+                if (Session != null && Session["Username"] != null)
+                {
+                    lblUsername.Text = Convert.ToString(Session["Username"]);
+                }
+                else
+                {
+                    lblUsername.Text = "Guest";
+                }
                 // Load the existing data from the database.
                 int id = Convert.ToInt32(Request.QueryString["id"]);
                 hdnID.Value = id.ToString();
@@ -48,131 +55,93 @@ namespace CRM
                 // Fill the form with the data.
                 if (reader.Read())
                 {
-                    txtCompanyName.Text = reader["Company_Name"].ToString();
-                    txtCompanyAddress.Text = reader["Company_Address"].ToString();
-                    String strCountry = reader["Company_Country"].ToString();
-                    ListItem ItemTerpilih4 = ddlCountry.Items.FindByValue(strCountry); // 3. ddlCountry
-                    if (ItemTerpilih4 != null)
-                    {
-                        ddlCountry.SelectedIndex = ddlCountry.Items.IndexOf(ItemTerpilih4);
-                    }
-                    txtCompanyPhone.Text = reader["Company_Phone"].ToString();
-                    txtCompanyContactPerson.Text = reader["Company_Contact_Person"].ToString();
-                    txtCompanyContactEmail.Text = reader["Company_Contact_Email"].ToString();
-                    String strPromotedSector = reader["Company_Industry_Type"].ToString(); // 11. ddlPromotedSector
-                    ListItem ItemTerpilih = ddlPIC.Items.FindByValue(strPromotedSector);
-                    if (ItemTerpilih != null)
-                    {
-                        ddlPIC.SelectedIndex = ddlPIC.Items.IndexOf(ItemTerpilih);
-                    }
-                    String strInvestmentType = reader["Investment_Type"].ToString(); // 12. ddlInvestmentType
-                    ListItem ItemTerpilih2 = ddlInvestmentType.Items.FindByValue(strInvestmentType);
-                    if (ItemTerpilih2 != null)
-                    {
-                        ddlInvestmentType.SelectedIndex = ddlInvestmentType.Items.IndexOf(ItemTerpilih2);
-                    }
-                    txtPSFRM.Text = reader["PSF_RM"].ToString();
-                    txtCompanyDescription.Text = reader["Company_Description"].ToString();
-                    txtLandSizeRequired.Text = reader["Land_Size_Required"].ToString();
-                    txtHeadquaters.Text = reader["Headquaters"].ToString();
-                    txtYearFounded.Text = reader["Year_Founded"].ToString();
-                    txtWebsite.Text = reader["Website"].ToString();
-                    txtBranches.Text = reader["Branches"].ToString();
-                    txtBuildingSize.Text = reader["Building_Size"].ToString();
-                    txtManPowerRequirement.Text = reader["Manpower_Request"].ToString();
-                    txtProposedTotalInvestment.Text = reader["Proposed_Investment"].ToString();
-                    txtElectricity.Text = reader["Electricity_Request"].ToString();
-                    txtWater.Text = reader["Water_Request"].ToString();
-                    txtNaturalGas.Text = reader["Natural_Gas_Request"].ToString();
-                    txtProjectTimeline.Text = reader["Project_Timeline"].ToString();
-                    string StartConstructionDate = reader["Start_Construction_Date"].ToString();
-                    if (!string.IsNullOrEmpty(StartConstructionDate) || StartConstructionDate == "01/01/1900")
-                    {
-                        txtStartConstructionDate.Text = Convert.ToDateTime(reader["Start_Construction_Date"]).ToString("yyyy-MM-dd");
-                    }
-                    else
-                    { txtStartConstructionDate.Text = ""; }
-                    if (txtStartConstructionDate.Text == "01/01/1900") { txtStartConstructionDate.Text = ""; }
-                    string StartOperationDate = reader["Start_Operation_Date"].ToString();
-                    if (!string.IsNullOrEmpty(StartOperationDate))
-                    {
-                        txtStartOperationDate.Text = Convert.ToDateTime(reader["Start_Operation_Date"]).ToString("yyyy-MM-dd");
-                    }
-                    else
-                    { txtStartOperationDate.Text = ""; }
-                    if (txtStartOperationDate.Text == "01/01/1900") { txtStartOperationDate.Text = ""; }
-                    string RFPDateStart = reader["RFP_Date_Start"].ToString();
-                    if (!string.IsNullOrEmpty(RFPDateStart))
-                    {
-                        txtRFPDateStart.Text = Convert.ToDateTime(reader["RFP_Date_Start"]).ToString("yyyy-MM-dd");
-                    }
-                    else
-                    { txtRFPDateStart.Text = ""; }
-                    if (txtRFPDateStart.Text == "01/01/1900") { txtRFPDateStart.Text = ""; }
-                    string RFPDateEnd = reader["RFP_Date_End"].ToString();
-                    if (!string.IsNullOrEmpty(RFPDateEnd))
-                    {
-                        txtRFPDateEnd.Text = Convert.ToDateTime(reader["RFP_Date_End"]).ToString("yyyy-MM-dd");
-                    }
-                    else
-                    { txtRFPDateEnd.Text = ""; }
-                    if (txtRFPDateEnd.Text == "01/01/1900") { txtRFPDateEnd.Text = ""; }
-                    string IsRFPstr = reader["Is_RFP"].ToString();
-                    bool IsRFP2 = bool.Parse(IsRFPstr);
-                    IsRFP.Checked = IsRFP2;
-                    txtRFPDescription.Text = reader["RFP_Description"].ToString();
-                    String strInvestorStatus = reader["Company_Status"].ToString(); // 26. ddlInvestorStatus
-                    ListItem ItemTerpilih3 = ddlInvestorStatus.Items.FindByValue(strInvestorStatus);
-                    if (ItemTerpilih2 != null)
-                    {
-                        ddlInvestorStatus.SelectedIndex = ddlInvestorStatus.Items.IndexOf(ItemTerpilih3);
-                    }
-                    String strDecisionStatus = reader["Decision"].ToString(); // ddl Decision modal
-                    ListItem ItemTerpilih5 = ddlDecisionStatus.Items.FindByValue(strDecisionStatus);
-                    if (ItemTerpilih5 != null)
-                    {
-                        ddlDecisionStatus.SelectedIndex = ddlDecisionStatus.Items.IndexOf (ItemTerpilih5);
-                    }
-                    txtDecisionDescription.Text = reader["Decision_Description"].ToString();
-                    if (reader["Date_Inquiry"] != DBNull.Value)
-                    {
-                        txtDateInquiry.Text = Convert.ToDateTime(reader["Date_Inquiry"]).ToString("yyyy-MM-dd");
-                    }
-                    txtLeasePeriod.Text = reader["Lease_Period"].ToString();
-                    hfLeadsStatus.Value = reader["Leads_Status"].ToString();
-                    txtLeadStatus.Text = reader["Leads_Status"].ToString();
-                    String strIndustrialPark = reader["industrial_Park_Name"].ToString();
-                    ListItem ItemTerpilih7 = industrialPark_ddl.Items.FindByValue(strIndustrialPark);
-                    if (ItemTerpilih7 != null)
-                    {
-                        industrialPark_ddl.SelectedIndex = industrialPark_ddl.Items.IndexOf(ItemTerpilih7);
-                    }
-                    else if (industrialPark_ddl.Items.Count > 0)
-                    {
-                        // Fallback to text matching if value doesn't match
-                        ListItem itemMatch = industrialPark_ddl.Items.Cast<ListItem>().FirstOrDefault(i => i.Text == strIndustrialPark);
-                        if (itemMatch != null) industrialPark_ddl.SelectedIndex = industrialPark_ddl.Items.IndexOf(itemMatch);
-                    }
-                    // Get the dropdown list control by its ID
-                    DropDownList statusSelect = (DropDownList)FindControl("statusSelect");
-                    // Loop through the dropdown list items
-                    foreach (ListItem item in statusSelect.Items)
-                    {
-                        // Check if the current item's value matches the selected value from the database
-                        if (item.Value == hfLeadsStatus.Value)
-                        {
-                            // Set the item as selected
-                            item.Selected = true;
-                            break; // Exit the loop once a match is found
+                    try {
+                        txtCompanyName.Text = Convert.ToString(reader["Company_Name"]);
+                        txtCompanyAddress.Text = Convert.ToString(reader["Company_Address"]);
+                        String strCountry = Convert.ToString(reader["Company_Country"]);
+                        ListItem ItemTerpilih4 = ddlCountry.Items.FindByValue(strCountry);
+                        if (ItemTerpilih4 != null) ddlCountry.SelectedIndex = ddlCountry.Items.IndexOf(ItemTerpilih4);
+                        
+                        txtCompanyPhone.Text = Convert.ToString(reader["Company_Phone"]);
+                        txtCompanyContactPerson.Text = Convert.ToString(reader["Company_Contact_Person"]);
+                        txtCompanyContactEmail.Text = Convert.ToString(reader["Company_Contact_Email"]);
+                        String strPromotedSector = Convert.ToString(reader["Company_Industry_Type"]);
+                        ListItem ItemTerpilih = ddlPIC.Items.FindByValue(strPromotedSector);
+                        if (ItemTerpilih != null) ddlPIC.SelectedIndex = ddlPIC.Items.IndexOf(ItemTerpilih);
+                        
+                        String strInvestmentType = Convert.ToString(reader["Investment_Type"]);
+                        ListItem ItemTerpilih2 = ddlInvestmentType.Items.FindByValue(strInvestmentType);
+                        if (ItemTerpilih2 != null) ddlInvestmentType.SelectedIndex = ddlInvestmentType.Items.IndexOf(ItemTerpilih2);
+                        
+                        txtPSFRM.Text = Convert.ToString(reader["PSF_RM"]);
+                        txtCompanyDescription.Text = Convert.ToString(reader["Company_Description"]);
+                        txtLandSizeRequired.Text = Convert.ToString(reader["Land_Size_Required"]);
+                        txtHeadquaters.Text = Convert.ToString(reader["Headquaters"]);
+                        txtYearFounded.Text = Convert.ToString(reader["Year_Founded"]);
+                        txtWebsite.Text = Convert.ToString(reader["Website"]);
+                        txtBranches.Text = Convert.ToString(reader["Branches"]);
+                        txtBuildingSize.Text = Convert.ToString(reader["Building_Size"]);
+                        txtManPowerRequirement.Text = Convert.ToString(reader["Manpower_Request"]);
+                        txtProposedTotalInvestment.Text = Convert.ToString(reader["Proposed_Investment"]);
+                        txtElectricity.Text = Convert.ToString(reader["Electricity_Request"]);
+                        txtWater.Text = Convert.ToString(reader["Water_Request"]);
+                        txtNaturalGas.Text = Convert.ToString(reader["Natural_Gas_Request"]);
+                        txtProjectTimeline.Text = Convert.ToString(reader["Project_Timeline"]);
+                        
+                        if (reader["Start_Construction_Date"] != DBNull.Value)
+                            txtStartConstructionDate.Text = Convert.ToDateTime(reader["Start_Construction_Date"]).ToString("yyyy-MM-dd");
+                        if (reader["Start_Operation_Date"] != DBNull.Value)
+                            txtStartOperationDate.Text = Convert.ToDateTime(reader["Start_Operation_Date"]).ToString("yyyy-MM-dd");
+                        if (reader["RFP_Date_Start"] != DBNull.Value)
+                            txtRFPDateStart.Text = Convert.ToDateTime(reader["RFP_Date_Start"]).ToString("yyyy-MM-dd");
+                        if (reader["RFP_Date_End"] != DBNull.Value)
+                            txtRFPDateEnd.Text = Convert.ToDateTime(reader["RFP_Date_End"]).ToString("yyyy-MM-dd");
+                        
+                        IsRFP.Checked = reader["Is_RFP"] != DBNull.Value ? (bool)reader["Is_RFP"] : false;
+                        txtRFPDescription.Text = Convert.ToString(reader["RFP_Description"]);
+                        
+                        String strInvestorStatus = Convert.ToString(reader["Company_Status"]);
+                        ListItem ItemTerpilih3 = ddlInvestorStatus.Items.FindByValue(strInvestorStatus);
+                        if (ItemTerpilih3 != null) ddlInvestorStatus.SelectedIndex = ddlInvestorStatus.Items.IndexOf(ItemTerpilih3);
+                        
+                        String strDecisionStatus = Convert.ToString(reader["Decision"]);
+                        ListItem ItemTerpilih5 = ddlDecisionStatus.Items.FindByValue(strDecisionStatus);
+                        if (ItemTerpilih5 != null) ddlDecisionStatus.SelectedIndex = ddlDecisionStatus.Items.IndexOf(ItemTerpilih5);
+                        
+                        txtDecisionDescription.Text = Convert.ToString(reader["Decision_Description"]);
+                        
+                        if (reader["Date_Inquiry"] != DBNull.Value)
+                            txtDateInquiry.Text = Convert.ToDateTime(reader["Date_Inquiry"]).ToString("yyyy-MM-dd");
+                        
+                        txtLeasePeriod.Text = Convert.ToString(reader["Lease_Period"]);
+                        txtInvestorsDecisionMaking.Text = Convert.ToString(reader["Investors_Decision_Making"]);
+                        txtInvestorsInternalStatus.Text = Convert.ToString(reader["Investors_Internal_Status"]);
+                        
+                        string leadsStatus = Convert.ToString(reader["Leads_Status"]);
+                        ListItem itemLeadsStatus = ddlLeadsStatus.Items.FindByValue(leadsStatus);
+                        if (itemLeadsStatus != null) ddlLeadsStatus.SelectedIndex = ddlLeadsStatus.Items.IndexOf(itemLeadsStatus);
+                        
+                        String strIndustrialPark = Convert.ToString(reader["industrial_Park_Name"]);
+                        if (industrialPark_ddl != null) {
+                            ListItem ItemTerpilih7 = industrialPark_ddl.Items.FindByValue(strIndustrialPark);
+                            if (ItemTerpilih7 != null) industrialPark_ddl.SelectedIndex = industrialPark_ddl.Items.IndexOf(ItemTerpilih7);
+                        }
+                        
+                        String strPersonInCharge = Convert.ToString(reader["PIC"]);
+                        if (ddlPersonInCharge != null) {
+                            ListItem ItemTerpilih6 = ddlPersonInCharge.Items.FindByValue(strPersonInCharge);
+                            if (ItemTerpilih6 != null) ddlPersonInCharge.SelectedIndex = ddlPersonInCharge.Items.IndexOf(ItemTerpilih6);
+                        }
+                        
+                        if (statusImage != null) statusImage.ImageUrl = leadsStatus + ".png";
+                        
+                    } catch (Exception ex) {
+                        if (lblMessage != null) {
+                            lblMessage.Visible = true;
+                            lblMessage.ForeColor = Color.Red;
+                            lblMessage.Text = "LoadData Error: " + ex.Message + " | Trace: " + ex.StackTrace;
                         }
                     }
-                    String strPersonInCharge = reader["PIC"].ToString(); // 29. ddlPersonInCharge 457
-                    ListItem ItemTerpilih6 = ddlPersonInCharge.Items.FindByValue(strPersonInCharge);
-                    if (ItemTerpilih6 != null)
-                    {
-                        ddlPersonInCharge.SelectedIndex = ddlPersonInCharge.Items.IndexOf(ItemTerpilih6);
-                    }
-                    statusImage.ImageUrl = hfLeadsStatus.Value.ToString() + ".png";
                 }
                 reader.Close();
             }
@@ -243,9 +212,10 @@ namespace CRM
                 string q11 = "Is_RFP = @Is_RFP, RFP_Date_Start = @RFP_Date_Start, RFP_Date_End = @RFP_Date_End, RFP_Description = @RFP_Description, ";
                 string q12 = "Days_Till_Expire = @Days_Till_Expire, Decision = @Decision, Decision_Description = @Decision_Description, ";
                 string q13 = "Updatedby = @UpdatedBy, Ip_Address = @Ip_Address, Leads_Status = @Leads_Status,PIC = @PIC, UpdatedDate = GETDATE(), ";
-                string q13a = "Date_Inquiry = @DateInquiry, Lease_Period = @LeasePeriod, industrial_Park_Name = @IndustrialPark ";
+                string q13a = "Date_Inquiry = @DateInquiry, Lease_Period = @LeasePeriod, industrial_Park_Name = @IndustrialPark, ";
+                string q13b = "Investors_Decision_Making = @InvestorsDecisionMaking, Investors_Internal_Status = @InvestorsInternalStatus ";
                 string q14 = "WHERE Id = @Id";
-                string query = q1 + q2 + q3 + q4 + q5 + q6 + q7 + q8 + q9 + q10 + q11 + q12 + q13 + q13a + q14;
+                string query = q1 + q2 + q3 + q4 + q5 + q6 + q7 + q8 + q9 + q10 + q11 + q12 + q13 + q13a + q13b + q14;
                 SqlCommand command = new SqlCommand(query, connection);
                 command.Parameters.AddWithValue("@Id", hdnID.Value);
                 command.Parameters.AddWithValue("@Company_Name", txtCompanyName.Text);
@@ -283,23 +253,44 @@ namespace CRM
                 command.Parameters.AddWithValue("@Days_Till_Expire", 0);
                 command.Parameters.AddWithValue("@Decision", ddlDecisionStatus.Text.ToString()); // 527
                 command.Parameters.AddWithValue("@Decision_Description", txtDecisionDescription.Text);
-                command.Parameters.AddWithValue("@UpdatedBy", Session["Username"].ToString());
-                command.Parameters.AddWithValue("@Ip_Address", Session["Ip_Address"].ToString());
-                command.Parameters.AddWithValue("@Leads_Status", hfLeadsStatus.Value.ToString());
+                command.Parameters.AddWithValue("@UpdatedBy", (Session != null && Session["Username"] != null) ? Session["Username"].ToString() : "System");
+                command.Parameters.AddWithValue("@Ip_Address", (Session != null && Session["Ip_Address"] != null) ? Session["Ip_Address"].ToString() : HttpContext.Current.Request.UserHostAddress);
+                command.Parameters.AddWithValue("@Leads_Status", ddlLeadsStatus.SelectedValue);
                 command.Parameters.AddWithValue("@PIC", ddlPersonInCharge.Text.ToString()); // 458
                 command.Parameters.AddWithValue("@IndustrialPark", (industrialPark_ddl != null && industrialPark_ddl.SelectedItem != null) ? industrialPark_ddl.SelectedItem.Text : "");
                 command.Parameters.AddWithValue("@DateInquiry", (txtDateInquiry != null && !string.IsNullOrEmpty(txtDateInquiry.Text)) ? (object)txtDateInquiry.Text : (object)DBNull.Value);
                 command.Parameters.AddWithValue("@LeasePeriod", (txtLeasePeriod != null && int.TryParse(txtLeasePeriod.Text, out int lp2)) ? lp2 : 0);
+                command.Parameters.AddWithValue("@InvestorsDecisionMaking", txtInvestorsDecisionMaking != null ? txtInvestorsDecisionMaking.Text : "");
+                command.Parameters.AddWithValue("@InvestorsInternalStatus", txtInvestorsInternalStatus != null ? txtInvestorsInternalStatus.Text : "");
 
-                id = Convert.ToInt32(command.ExecuteNonQuery()); //command.ExecuteNonQuery();
-                if (id > 0)
-                {                    
-                    lblMessage.Text = "Data updated successfully";
+                try {
+                    id = command.ExecuteNonQuery();
+                    
+                    // ROBUSTNESS FIX: Perform an explicit secondary update for the new fields 
+                    // to ensure they are persisted regardless of any issues with the large query above.
+                    string quickQuery = "UPDATE Investors_Profile SET Investors_Decision_Making = @val1, Investors_Internal_Status = @val2 WHERE Id = @Id";
+                    using (SqlCommand quickCmd = new SqlCommand(quickQuery, connection))
+                    {
+                        quickCmd.Parameters.AddWithValue("@val1", txtInvestorsDecisionMaking != null ? txtInvestorsDecisionMaking.Text : "");
+                        quickCmd.Parameters.AddWithValue("@val2", txtInvestorsInternalStatus != null ? txtInvestorsInternalStatus.Text : "");
+                        quickCmd.Parameters.AddWithValue("@Id", hdnID.Value);
+                        quickCmd.ExecuteNonQuery();
+                    }
+
+                    if (id > 0)
+                    {                    
+                        lblMessage.Text = "DEBUG: Values Captured - [" + txtInvestorsDecisionMaking.Text + "] / [" + txtInvestorsInternalStatus.Text + "] | Update Result=" + (id > 0 ? "Success" : "Failed");
+                        lblMessage.ForeColor = Color.Blue;
+                        lblMessage.Visible = true;
+                    }
+                } catch (Exception ex) {
+                    lblMessage.Text = "Update Error: " + ex.Message;
+                    lblMessage.ForeColor = Color.Red;
+                    lblMessage.Visible = true;
+                    return;
                 }
-                // Redirect the user back to the main page.
-                //Response.Redirect("Home.aspx");
+                // Response.Redirect("List_Investors_Profile.aspx");
             }
-            Response.Redirect("List_Investors_Profile.aspx");
         }
         private void BindCountry()
         {

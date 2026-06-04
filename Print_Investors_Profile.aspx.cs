@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Configuration;
 using System.Data;
@@ -81,6 +81,8 @@ namespace CRM
                 if (lblStartOperation.Text == "01/01/1900") { lblStartOperation.Text = ""; }
                 lblCompanyDescription.Text = reader["Company_Description"].ToString();
                 lblInvestorsStatus.Text = reader["Company_Status"].ToString();
+                lblDecisionMaking.Text = reader["Investors_Decision_Making"].ToString();
+                lblInternalStatus.Text = reader["Investors_Internal_Status"].ToString();
                 LoadInvestorActivities(lblCompanyName.Text);
             }
         }

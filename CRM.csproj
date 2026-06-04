@@ -1,4 +1,4 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="12.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <Import Project="packages\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.2.0.1\build\net46\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.props" Condition="Exists('packages\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.2.0.1\build\net46\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.props')" />
   <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
@@ -137,6 +137,8 @@
     <Content Include="Content\Site.css" />
     <Content Include="Css\Chief1.css" />
     <Content Include="Css\stylesElegant.css" />
+    <Content Include="Dashboard.aspx" />
+    <Content Include="company_contacts.aspx" />
     <Content Include="Default.aspx" />
     <Content Include="DeletePhoto.aspx" />
     <Content Include="DisplayPhoto1.aspx" />
@@ -145,11 +147,16 @@
     <Content Include="DownloadFiles_Activity.aspx" />
     <Content Include="DownloadFiles_Profiles.aspx" />
     <Content Include="Edit_Contacts.aspx" />
+    <Content Include="Edit_Contacts2.aspx" />
     <Content Include="Edit_Investors_Activities.aspx" />
+    <Content Include="Edit_Investors_Activities2.aspx" />
     <Content Include="Edit_Investors_Profile.aspx" />
+    <Content Include="Edit_Investors_Profile2.aspx" />
     <Content Include="favicon.ico" />
     <Content Include="FileManage_Investors_Profile.aspx" />
+    <Content Include="FileManage_Investors_Profile2.aspx" />
     <Content Include="FileManage_Investor_Activities.aspx" />
+    <Content Include="FileManage_Investor_Activities2.aspx" />
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Global.asax" />
     <Content Include="fonts\glyphicons-halflings-regular.woff2" />
@@ -165,12 +172,14 @@
     <Content Include="List_Contacts.aspx" />
     <Content Include="List_Investors_Activities_2.aspx" />
     <Content Include="List_Investors_Activities.aspx" />
+    <Content Include="List_Investors_Activities2.aspx" />
     <Content Include="List_Investors_Profile.aspx" />
     <Content Include="List_LOG_Investors_Activities.aspx" />
     <Content Include="List_RFP.aspx" />
     <Content Include="Logout.aspx" />
     <Content Include="Master.Master" />
     <Content Include="New_Contacts.aspx" />
+    <Content Include="New_Contacts2.aspx" />
     <Content Include="WebForm1.aspx" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
@@ -264,6 +273,20 @@
     <Compile Include="Contact.aspx.designer.cs">
       <DependentUpon>Contact.aspx</DependentUpon>
     </Compile>
+    <Compile Include="Dashboard.aspx.cs">
+      <DependentUpon>Dashboard.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Dashboard.aspx.designer.cs">
+      <DependentUpon>Dashboard.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="company_contacts.aspx.cs">
+      <DependentUpon>company_contacts.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="company_contacts.aspx.designer.cs">
+      <DependentUpon>company_contacts.aspx</DependentUpon>
+    </Compile>
     <Compile Include="Default.aspx.cs">
       <DependentUpon>Default.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -320,12 +343,26 @@
     <Compile Include="Edit_Contacts.aspx.designer.cs">
       <DependentUpon>Edit_Contacts.aspx</DependentUpon>
     </Compile>
+    <Compile Include="Edit_Contacts2.aspx.cs">
+      <DependentUpon>Edit_Contacts2.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Edit_Contacts2.aspx.designer.cs">
+      <DependentUpon>Edit_Contacts2.aspx</DependentUpon>
+    </Compile>
     <Compile Include="Edit_Investors_Activities.aspx.cs">
       <DependentUpon>Edit_Investors_Activities.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
     <Compile Include="Edit_Investors_Activities.aspx.designer.cs">
       <DependentUpon>Edit_Investors_Activities.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Edit_Investors_Activities2.aspx.cs">
+      <DependentUpon>Edit_Investors_Activities2.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Edit_Investors_Activities2.aspx.designer.cs">
+      <DependentUpon>Edit_Investors_Activities2.aspx</DependentUpon>
     </Compile>
     <Compile Include="Edit_Investors_Profile.aspx.cs">
       <DependentUpon>Edit_Investors_Profile.aspx</DependentUpon>
@@ -334,6 +371,13 @@
     <Compile Include="Edit_Investors_Profile.aspx.designer.cs">
       <DependentUpon>Edit_Investors_Profile.aspx</DependentUpon>
     </Compile>
+    <Compile Include="Edit_Investors_Profile2.aspx.cs">
+      <DependentUpon>Edit_Investors_Profile2.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Edit_Investors_Profile2.aspx.designer.cs">
+      <DependentUpon>Edit_Investors_Profile2.aspx</DependentUpon>
+    </Compile>
     <Compile Include="FileManage_Investors_Profile.aspx.cs">
       <DependentUpon>FileManage_Investors_Profile.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -341,12 +385,26 @@
     <Compile Include="FileManage_Investors_Profile.aspx.designer.cs">
       <DependentUpon>FileManage_Investors_Profile.aspx</DependentUpon>
     </Compile>
+    <Compile Include="FileManage_Investors_Profile2.aspx.cs">
+      <DependentUpon>FileManage_Investors_Profile2.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="FileManage_Investors_Profile2.aspx.designer.cs">
+      <DependentUpon>FileManage_Investors_Profile2.aspx</DependentUpon>
+    </Compile>
     <Compile Include="FileManage_Investor_Activities.aspx.cs">
       <DependentUpon>FileManage_Investor_Activities.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
     <Compile Include="FileManage_Investor_Activities.aspx.designer.cs">
       <DependentUpon>FileManage_Investor_Activities.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="FileManage_Investor_Activities2.aspx.cs">
+      <DependentUpon>FileManage_Investor_Activities2.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="FileManage_Investor_Activities2.aspx.designer.cs">
+      <DependentUpon>FileManage_Investor_Activities2.aspx</DependentUpon>
     </Compile>
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
@@ -386,6 +444,13 @@
     </Compile>
     <Compile Include="List_Investors_Activities.aspx.designer.cs">
       <DependentUpon>List_Investors_Activities.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="List_Investors_Activities2.aspx.cs">
+      <DependentUpon>List_Investors_Activities2.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="List_Investors_Activities2.aspx.designer.cs">
+      <DependentUpon>List_Investors_Activities2.aspx</DependentUpon>
     </Compile>
     <Compile Include="List_Investors_Profile.aspx.cs">
       <DependentUpon>List_Investors_Profile.aspx</DependentUpon>
@@ -428,6 +493,13 @@
     </Compile>
     <Compile Include="New_Contacts.aspx.designer.cs">
       <DependentUpon>New_Contacts.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="New_Contacts2.aspx.cs">
+      <DependentUpon>New_Contacts2.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="New_Contacts2.aspx.designer.cs">
+      <DependentUpon>New_Contacts2.aspx</DependentUpon>
     </Compile>
     <Compile Include="New_Investors_Activities.aspx.cs">
       <DependentUpon>New_Investors_Activities.aspx</DependentUpon>

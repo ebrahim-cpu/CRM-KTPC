@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Configuration;
 using System.Data.SqlClient;
@@ -17,10 +17,10 @@ namespace CRM
         {
             if (!IsPostBack)
             {
-                lblUsername.Text = Session[name: "Username"].ToString();
+                lblUsername.Text = Convert.ToString(Session["Username"]);
                 Session["FromLocation"] = "List_RFP";
                 BindGridView();
-                lblUsername.Text = Session["Username"].ToString();
+                lblUsername.Text = Convert.ToString(Session["Username"]);
                 if (string.IsNullOrEmpty(lblUsername.Text))
                 {
                     Response.Redirect("Default.aspx");

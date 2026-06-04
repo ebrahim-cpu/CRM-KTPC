@@ -1,4 +1,4 @@
-﻿<%@ Page Language="C#" AutoEventWireup="true" CodeBehind="Print_Investors_Profile.aspx.cs" Inherits="CRM.Print_Investors_Profile" %>
+<%@ Page Language="C#" AutoEventWireup="true" CodeBehind="Print_Investors_Profile.aspx.cs" Inherits="CRM.Print_Investors_Profile" %>
 
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml">
@@ -234,7 +234,6 @@
                         <asp:Label ID="Label6" runat="server"></asp:Label></td>
                 </tr>
                 <tr class="grey-row">
-
                     <td colspan="3"><b>G. Investors Status</b></td>
                 </tr>
 
@@ -243,6 +242,18 @@
                     <td><b>&nbsp;Investors Status:</b></td>
                     <td>
                         <asp:Label ID="lblInvestorsStatus" runat="server"></asp:Label></td>
+                </tr>
+                <tr>
+                    <td>27. </td>
+                    <td><b>&nbsp;Decision Making:</b></td>
+                    <td>
+                        <asp:Label ID="lblDecisionMaking" runat="server"></asp:Label></td>
+                </tr>
+                <tr>
+                    <td>28. </td>
+                    <td><b>&nbsp;Internal Status:</b></td>
+                    <td>
+                        <asp:Label ID="lblInternalStatus" runat="server"></asp:Label></td>
                 </tr>
             </table>
             <div class="col-sm-11">

@@ -1,4 +1,4 @@
-﻿<%@ Page Language="C#" AutoEventWireup="true" CodeBehind="ConfirmDelete_ActivityPhoto.aspx.cs" Inherits="CRM.ConfirmDelete_ActivityPhoto" %>
+<%@ Page Language="C#" AutoEventWireup="true" CodeBehind="ConfirmDelete_ActivityPhoto.aspx.cs" Inherits="CRM.ConfirmDelete_ActivityPhoto" %>
 
 <!DOCTYPE html>
 
