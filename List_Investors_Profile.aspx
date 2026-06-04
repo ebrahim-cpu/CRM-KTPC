@@ -1,4 +1,4 @@
-<%@ Page Language="C#" AutoEventWireup="true" CodeFile="List_Investors_Profile.aspx.cs"
+﻿<%@ Page Language="C#" AutoEventWireup="true" CodeFile="List_Investors_Profile.aspx.cs"
     Inherits="CRM.List_Investors_Profile_V2" %>
 
     <!DOCTYPE html>
@@ -127,7 +127,7 @@
                                 <ul class="dropdown-menu">
                                     <li><a href="New_Investors_Activities.aspx">1. New Activity</a></li>
                                     <li><a href="List_Investors_Activities.aspx">2. Activity List</a></li>
-                                    <li><a href="List_RFP.aspx">3. RFP</a></li>
+                                    <li><a href="ActivityTimeline.aspx">3. Activity Timeline</a></li><li><a href="List_RFP.aspx">4. RFP</a></li>
                                 </ul>
                             </li>
                         </ul>

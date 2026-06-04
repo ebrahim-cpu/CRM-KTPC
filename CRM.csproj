@@ -125,6 +125,7 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="About.aspx" />
+    <Content Include="ActivityTimeline.aspx" />
     <Content Include="AdminUser.aspx" />
     <Content Include="ConfirmDelete.aspx" />
     <Content Include="ConfirmDelete_ActivityPhoto.aspx" />
@@ -241,6 +242,13 @@
     </Compile>
     <Compile Include="About.aspx.designer.cs">
       <DependentUpon>About.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="ActivityTimeline.aspx.cs">
+      <DependentUpon>ActivityTimeline.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="ActivityTimeline.aspx.designer.cs">
+      <DependentUpon>ActivityTimeline.aspx</DependentUpon>
     </Compile>
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="Class1.cs" />

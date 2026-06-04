@@ -1,4 +1,4 @@
-<%@ Page Language="C#" AutoEventWireup="true" CodeBehind="Dashboard.aspx.cs" Inherits="CRM.Home" %>
+﻿<%@ Page Language="C#" AutoEventWireup="true" CodeBehind="Dashboard.aspx.cs" Inherits="CRM.Home" %>
 
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml">
@@ -35,7 +35,7 @@
                         <ul class="dropdown-menu">
                             <li><a href="New_Investors_Activities.aspx">1. Add New Activity</a></li>
                             <li><a href="List_Investors_Activities.aspx">2. Investor's Activity List</a></li>
-                            <li><a href="List_RFP.aspx">3. RFP</a></li>
+                            <li><a href="ActivityTimeline.aspx">3. Activity Timeline</a></li><li><a href="List_RFP.aspx">4. RFP</a></li>
                         </ul>
                     </li>
                 </ul>
@@ -82,7 +82,7 @@
                         <span data-toggle="modal" data-target="#myModalUpdates">
                             <a class="btn btn-default" data-toggle="tooltip" data-placement="bottom" title="Update Log"><span class="glyphicon glyphicon-cog"></span></a>
                         </span>
-                        © Copyright 2023 Kulim Technology Park Corporation Sdn Bhd. All Rights Reserved.
+                        Â© Copyright 2023 Kulim Technology Park Corporation Sdn Bhd. All Rights Reserved.
                     </p>
                 </div>
 

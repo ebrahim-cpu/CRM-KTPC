@@ -1,4 +1,4 @@
-<%@ Page Language="C#" AutoEventWireup="true" CodeBehind="Edit_Investors_Activities2.aspx.cs" Inherits="CRM.Edit_Investors_Activities2" %>
+﻿<%@ Page Language="C#" AutoEventWireup="true" CodeBehind="Edit_Investors_Activities2.aspx.cs" Inherits="CRM.Edit_Investors_Activities2" %>
 
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml">
@@ -233,7 +233,7 @@
                         <ul class="dropdown-menu">
                             <li><a href="New_Investors_Activities.aspx">1. Add New Activity</a></li>
                             <li><a href="List_Investors_Activities2.aspx">2. Investor's Activity List</a></li>
-                            <li><a href="List_RFP.aspx">3. RFP</a></li>
+                            <li><a href="ActivityTimeline.aspx">3. Activity Timeline</a></li><li><a href="List_RFP.aspx">4. RFP</a></li>
                         </ul>
                     </li>
                 </ul>
