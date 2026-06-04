@@ -156,10 +156,6 @@ namespace CRM
                 if (string.IsNullOrEmpty(txtLandSizeRequired.Text)) { txtLandSizeRequired.Text = "0"; };
                 if (string.IsNullOrEmpty(txtPSFRM.Text)) { txtPSFRM.Text = "0"; };
                 if (string.IsNullOrEmpty(txtBuildingSize.Text)) { txtBuildingSize.Text = "0"; };
-                if (string.IsNullOrEmpty(txtElectricity.Text)) { txtElectricity.Text = "0"; };
-                if (string.IsNullOrEmpty(txtWater.Text)) { txtWater.Text = "0"; };
-                if (string.IsNullOrEmpty(txtNaturalGas.Text)) { txtNaturalGas.Text = "0"; };
-                if (string.IsNullOrEmpty(txtProposedTotalInvestment.Text)) { txtProposedTotalInvestment.Text = "0"; };
                 if (string.IsNullOrEmpty(txtManPowerRequirement.Text)) { txtManPowerRequirement.Text = "0"; };
                 DateTime Start_Construction_Date;
                 DateTime Start_Operation_Date;

@@ -379,30 +379,26 @@
                                 19.
                                 <asp:Label for="txtElectricity" runat="server" Text="Electricity (kWh)"></asp:Label>
                                 <asp:TextBox ID="txtElectricity" runat="server" CssClass="form-control"
-                                    placeholder="Electricity Requirement" MaxLength="8" type="number" min="0"
-                                    max="10000000" step="0.01"></asp:TextBox>
+                                    placeholder="Electricity Requirement" MaxLength="20"></asp:TextBox>
                             </div>
                             <div class="form-group">
                                 20.
                                 <asp:Label for="txtWater" runat="server" Text="Water (m3)"></asp:Label>
                                 <asp:TextBox ID="txtWater" runat="server" CssClass="form-control"
-                                    placeholder="Water Requirement" MaxLength="8" type="number" min="0" max="10000000"
-                                    step="0.01"></asp:TextBox>
+                                    placeholder="Water Requirement" MaxLength="20"></asp:TextBox>
                             </div>
                             <div class="form-group">
                                 21.
                                 <asp:Label for="txtNaturalGas" runat="server" Text="Natural Gas (Nm3/hr)"></asp:Label>
                                 <asp:TextBox ID="txtNaturalGas" runat="server" CssClass="form-control"
-                                    placeholder="Natural Gas Requirement" MaxLength="8" type="number" min="0"
-                                    max="10000000" step="0.01"></asp:TextBox>
+                                    placeholder="Natural Gas Requirement" MaxLength="20"></asp:TextBox>
                             </div>
                             <div class="form-group">
                                 22.
                                 <asp:Label for="txtIndustrialGas" runat="server" Text="Industrial Gas (Nm3/hr)">
                                 </asp:Label>
                                 <asp:TextBox ID="txtIndustrialGas" runat="server" CssClass="form-control"
-                                    placeholder="Industrial Gas Requirement" MaxLength="8" type="number" min="0"
-                                    max="10000000" step="0.01"></asp:TextBox>
+                                    placeholder="Industrial Gas Requirement" MaxLength="20"></asp:TextBox>
                             </div>
                         </div>
                         <div class="col-sm-6">
@@ -413,8 +409,7 @@
                                 <asp:Label for="txtProposedTotalInvestment" runat="server"
                                     Text="Proposed Total Investment (RM)"></asp:Label>
                                 <asp:TextBox ID="txtProposedTotalInvestment" runat="server" CssClass="form-control"
-                                    placeholder="Proposed Total Investment" MaxLength="20" type="number" min="0"
-                                    max="1000000000000000000" step="1000"></asp:TextBox>
+                                    placeholder="Proposed Total Investment" MaxLength="20"></asp:TextBox>
                             </div>
                             <div class="form-group">
                                 24.

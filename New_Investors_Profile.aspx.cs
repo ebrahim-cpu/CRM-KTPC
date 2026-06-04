@@ -102,11 +102,11 @@ namespace CRM
                     cmd.Parameters.AddWithValue("@LandSizeRequired", (txtLandSizeRequired != null && decimal.TryParse(txtLandSizeRequired.Text, out val)) ? val : 0);
                     cmd.Parameters.AddWithValue("@PSFRM", (txtPSFRM != null && decimal.TryParse(txtPSFRM.Text, out val)) ? val : 0);
                     cmd.Parameters.AddWithValue("@BuildingSize", (txtBuildingSize != null && decimal.TryParse(txtBuildingSize.Text, out val)) ? val : 0);
-                    cmd.Parameters.AddWithValue("@Electricity", (txtElectricity != null && decimal.TryParse(txtElectricity.Text, out val)) ? val : 0);
-                    cmd.Parameters.AddWithValue("@Water", (txtWater != null && decimal.TryParse(txtWater.Text, out val)) ? val : 0);
-                    cmd.Parameters.AddWithValue("@NaturalGas", (txtNaturalGas != null && decimal.TryParse(txtNaturalGas.Text, out val)) ? val : 0);
-                    cmd.Parameters.AddWithValue("@IndustrialGas", (txtIndustrialGas != null && decimal.TryParse(txtIndustrialGas.Text, out val)) ? val : 0);
-                    cmd.Parameters.AddWithValue("@ProposedTotalInvestment", (txtProposedTotalInvestment != null && decimal.TryParse(txtProposedTotalInvestment.Text, out val)) ? val : 0);
+                    cmd.Parameters.AddWithValue("@Electricity", txtElectricity != null ? txtElectricity.Text : "");
+                    cmd.Parameters.AddWithValue("@Water", txtWater != null ? txtWater.Text : "");
+                    cmd.Parameters.AddWithValue("@NaturalGas", txtNaturalGas != null ? txtNaturalGas.Text : "");
+                    cmd.Parameters.AddWithValue("@IndustrialGas", txtIndustrialGas != null ? txtIndustrialGas.Text : "");
+                    cmd.Parameters.AddWithValue("@ProposedTotalInvestment", txtProposedTotalInvestment != null ? txtProposedTotalInvestment.Text : "");
                     cmd.Parameters.AddWithValue("@ManPowerRequirement", (txtManPowerRequirement != null && decimal.TryParse(txtManPowerRequirement.Text, out val)) ? val : 0);
 
                     cmd.Parameters.AddWithValue("@ProjectTimeline", txtProjectTimeline != null ? txtProjectTimeline.Text : "");
