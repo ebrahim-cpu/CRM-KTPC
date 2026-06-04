@@ -240,7 +240,7 @@
                             <PagerStyle CssClass="pagination-ys" HorizontalAlign="Center" />
                             <Columns>
                                 <asp:BoundField DataField="Id" HeaderText="ID" Visible="false" />
-                                <asp:TemplateField HeaderText="#">
+                                <asp:TemplateField HeaderText="#" ItemStyle-Width="50px" HeaderStyle-Width="50px" ItemStyle-HorizontalAlign="Center" HeaderStyle-HorizontalAlign="Center">
                                     <ItemTemplate>
                                         <%# Container.DataItemIndex + 1 %>
                                     </ItemTemplate>
