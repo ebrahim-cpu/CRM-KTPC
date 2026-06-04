@@ -86,6 +86,7 @@ namespace CRM
                         txtElectricity.Text = Convert.ToString(reader["Electricity_Request"]);
                         txtWater.Text = Convert.ToString(reader["Water_Request"]);
                         txtNaturalGas.Text = Convert.ToString(reader["Natural_Gas_Request"]);
+                        txtIndustrialGas.Text = Convert.ToString(reader["Industrial_Gas_Request"]);
                         txtProjectTimeline.Text = Convert.ToString(reader["Project_Timeline"]);
                         
                         if (reader["Start_Construction_Date"] != DBNull.Value)
@@ -203,7 +204,7 @@ namespace CRM
                 string q6 = "Year_Founded = @Year_Founded, Website = @Website, Branches = @Branches, ";
                 string q7 = "Building_Size = @Building_Size, Manpower_Request = @Manpower_Request, Proposed_Investment = @Proposed_Investment,";
                 string q8 = "Products = @Products, Electricity_Request = @Electricity_Request, Water_Request = @Water_Request, ";
-                string q9 = "Natural_Gas_Request = @Natural_Gas_Request, Project_Timeline = @Project_Timeline, Company_Status = @Company_Status, ";
+                string q9 = "Natural_Gas_Request = @Natural_Gas_Request, Industrial_Gas_Request = @Industrial_Gas_Request, Project_Timeline = @Project_Timeline, Company_Status = @Company_Status, ";
                 string q10 = "Start_Construction_Date = @Start_Construction_Date, Start_Operation_Date = @Start_Operation_Date, ";
                 string q11 = "Is_RFP = @Is_RFP, RFP_Date_Start = @RFP_Date_Start, RFP_Date_End = @RFP_Date_End, RFP_Description = @RFP_Description, ";
                 string q12 = "Days_Till_Expire = @Days_Till_Expire, Decision = @Decision, Decision_Description = @Decision_Description, ";
