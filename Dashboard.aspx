@@ -1,4 +1,4 @@
-﻿<%@ Page Language="C#" AutoEventWireup="true" CodeBehind="Dashboard.aspx.cs" Inherits="CRM.Dashboard" %>
+<%@ Page Language="C#" AutoEventWireup="true" CodeBehind="Dashboard.aspx.cs" Inherits="CRM.Dashboard" %>
 
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml">
@@ -180,7 +180,7 @@
                                                                 <a href='company_contacts.aspx?id=<%# Eval("Id") %>' class="btn btn-default btn-xs" title="Company Contacts" style="margin-right: 2px;">
                                                                     <i class="glyphicon glyphicon-phone"></i> Contacts <span class="badge" style="background-color: #777;"><%# Eval("ContactCount") %></span>
                                                                 </a>
-                                                                <a href='List_Investors_Activities2.aspx?id=<%# Eval("Id") %>' target="_blank" class="btn btn-default btn-xs" title="Company Activities">
+                                                                <a href='ActivityTimeline.aspx?company=<%# Server.UrlEncode(Eval("Company_Name").ToString()) %>' target="_blank" class="btn btn-default btn-xs" title="Company Activities">
                                                                     <i class="glyphicon glyphicon-list-alt"></i> Activities <span class="badge" style="background-color: #777;"><%# Eval("ActivityCount") %></span>
                                                                 </a>
                                                             </td>
@@ -245,7 +245,7 @@
                                                                 <a href='company_contacts.aspx?id=<%# Eval("Id") %>' class="btn btn-default btn-xs" title="Company Contacts" style="margin-right: 2px;">
                                                                     <i class="glyphicon glyphicon-phone"></i> Contacts <span class="badge" style="background-color: #777;"><%# Eval("ContactCount") %></span>
                                                                 </a>
-                                                                <a href='List_Investors_Activities2.aspx?id=<%# Eval("Id") %>' target="_blank" class="btn btn-default btn-xs" title="Company Activities">
+                                                                <a href='ActivityTimeline.aspx?company=<%# Server.UrlEncode(Eval("Company_Name").ToString()) %>' target="_blank" class="btn btn-default btn-xs" title="Company Activities">
                                                                     <i class="glyphicon glyphicon-list-alt"></i> Activities <span class="badge" style="background-color: #777;"><%# Eval("ActivityCount") %></span>
                                                                 </a>
                                                             </td>
@@ -310,7 +310,7 @@
                                                                 <a href='company_contacts.aspx?id=<%# Eval("Id") %>' class="btn btn-default btn-xs" title="Company Contacts" style="margin-right: 2px;">
                                                                     <i class="glyphicon glyphicon-phone"></i> Contacts <span class="badge"><%# Eval("ContactCount") %></span>
                                                                 </a>
-                                                                <a href='List_Investors_Activities2.aspx?id=<%# Eval("Id") %>' target="_blank" class="btn btn-default btn-xs" title="Company Activities">
+                                                                <a href='ActivityTimeline.aspx?company=<%# Server.UrlEncode(Eval("Company_Name").ToString()) %>' target="_blank" class="btn btn-default btn-xs" title="Company Activities">
                                                                     <i class="glyphicon glyphicon-list-alt"></i> Activities <span class="badge"><%# Eval("ActivityCount") %></span>
                                                                 </a>
                                                             </td>
@@ -375,7 +375,7 @@
                                                                 <a href='company_contacts.aspx?id=<%# Eval("Id") %>' class="btn btn-default btn-xs" title="Company Contacts" style="margin-right: 2px;">
                                                                     <i class="glyphicon glyphicon-phone"></i> Contacts <span class="badge" style="background-color: #777;"><%# Eval("ContactCount") %></span>
                                                                 </a>
-                                                                <a href='List_Investors_Activities2.aspx?id=<%# Eval("Id") %>' target="_blank" class="btn btn-default btn-xs" title="Company Activities">
+                                                                <a href='ActivityTimeline.aspx?company=<%# Server.UrlEncode(Eval("Company_Name").ToString()) %>' target="_blank" class="btn btn-default btn-xs" title="Company Activities">
                                                                     <i class="glyphicon glyphicon-list-alt"></i> Activities <span class="badge" style="background-color: #777;"><%# Eval("ActivityCount") %></span>
                                                                 </a>
                                                             </td>
