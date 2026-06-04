@@ -14,6 +14,23 @@
         .warm-status { background-color: orange; font-weight: bold; color: black; padding: 2px 5px; border-radius: 5px; box-shadow: 2px 2px 4px rgba(0,0,0,0.3); }
         .cold-status { background-color: blue; font-weight: bold; color: white; padding: 2px 5px; border-radius: 5px; box-shadow: 2px 2px 4px rgba(0,0,0,0.3); }
         .green-status { background-color: forestgreen; font-weight: bold; color: white; padding: 2px 5px; border-radius: 5px; box-shadow: 2px 2px 4px rgba(0,0,0,0.3); }
+        
+        /* Interactive stats cards styling */
+        .stat-card {
+            transition: transform 0.2s, box-shadow 0.2s;
+            display: block;
+            text-decoration: none !important;
+        }
+        .stat-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 20px rgba(0,0,0,0.15);
+        }
+        .table-hot thead { background-color: #f2dede; color: #a94442; }
+        .table-warm thead { background-color: #fcf8e3; color: #8a6d3b; }
+        .table-cold thead { background-color: #d9edf7; color: #31708f; }
+        .table-completed thead { background-color: #dff0d8; color: #3c763d; }
+        .table th { text-align: center; font-weight: bold; font-size: 13px; }
+        .table td { vertical-align: middle !important; font-size: 13px; }
     </style>
 </head>
 <body>
@@ -66,36 +83,44 @@
             <h2 class="text-center" style="margin-bottom: 30px;">Leads Status Overview</h2>
             <div class="row text-center">
                 <div class="col-md-3">
-                    <div class="panel" style="border: 2px solid red;">
-                        <div class="panel-heading" style="background-color: red; color: yellow;">HOT</div>
-                        <div class="panel-body">
-                            <div class="stat-number"><asp:Label ID="lblHot" runat="server">0</asp:Label></div>
+                    <a href="#collapseHot" data-toggle="collapse" data-parent="#accordionMain" class="stat-card">
+                        <div class="panel" style="border: 2px solid red; margin-bottom: 20px;">
+                            <div class="panel-heading" style="background-color: red; color: yellow;">HOT</div>
+                            <div class="panel-body">
+                                <div class="stat-number" style="color: red;"><asp:Label ID="lblHot" runat="server">0</asp:Label></div>
+                            </div>
                         </div>
-                    </div>
+                    </a>
                 </div>
                 <div class="col-md-3">
-                    <div class="panel" style="border: 2px solid orange;">
-                        <div class="panel-heading" style="background-color: orange; color: black;">WARM</div>
-                        <div class="panel-body">
-                            <div class="stat-number"><asp:Label ID="lblWarm" runat="server">0</asp:Label></div>
+                    <a href="#collapseWarm" data-toggle="collapse" data-parent="#accordionMain" class="stat-card">
+                        <div class="panel" style="border: 2px solid orange; margin-bottom: 20px;">
+                            <div class="panel-heading" style="background-color: orange; color: black;">WARM</div>
+                            <div class="panel-body">
+                                <div class="stat-number" style="color: orange;"><asp:Label ID="lblWarm" runat="server">0</asp:Label></div>
+                            </div>
                         </div>
-                    </div>
+                    </a>
                 </div>
                 <div class="col-md-3">
-                    <div class="panel" style="border: 2px solid blue;">
-                        <div class="panel-heading" style="background-color: blue; color: white;">COLD</div>
-                        <div class="panel-body">
-                            <div class="stat-number"><asp:Label ID="lblCold" runat="server">0</asp:Label></div>
+                    <a href="#collapseCold" data-toggle="collapse" data-parent="#accordionMain" class="stat-card">
+                        <div class="panel" style="border: 2px solid blue; margin-bottom: 20px;">
+                            <div class="panel-heading" style="background-color: blue; color: white;">COLD</div>
+                            <div class="panel-body">
+                                <div class="stat-number" style="color: blue;"><asp:Label ID="lblCold" runat="server">0</asp:Label></div>
+                            </div>
                         </div>
-                    </div>
+                    </a>
                 </div>
                 <div class="col-md-3">
-                    <div class="panel" style="border: 2px solid forestgreen;">
-                        <div class="panel-heading" style="background-color: forestgreen; color: white;">COMPLETED</div>
-                        <div class="panel-body">
-                            <div class="stat-number"><asp:Label ID="lblCompleted" runat="server">0</asp:Label></div>
+                    <a href="#collapseCompleted" data-toggle="collapse" data-parent="#accordionMain" class="stat-card">
+                        <div class="panel" style="border: 2px solid forestgreen; margin-bottom: 20px;">
+                            <div class="panel-heading" style="background-color: forestgreen; color: white;">COMPLETED</div>
+                            <div class="panel-body">
+                                <div class="stat-number" style="color: forestgreen;"><asp:Label ID="lblCompleted" runat="server">0</asp:Label></div>
+                            </div>
                         </div>
-                    </div>
+                    </a>
                 </div>
             </div>
 
@@ -113,55 +138,57 @@
                                     </a>
                                 </h4>
                             </div>
-                            <div id="collapseHot" class="panel-collapse collapse">
+                             <div id="collapseHot" class="panel-collapse collapse">
                                 <div class="panel-body">
-                                    <div class="panel-group" id="accordionHot">
-                                        <asp:Repeater ID="rptHot" runat="server">
-                                            <ItemTemplate>
-                                                <div class="panel panel-default">
-                                                    <div class="panel-heading" style="background-color: #f9f9f9;">
-                                                        <h4 class="panel-title" style="font-size: 14px;">
-                                                            <a data-toggle="collapse" data-parent="#accordionHot" href='#collapseCompany_<%# Eval("Id") %>' style="text-decoration:none;">
-                                                                <i class="glyphicon glyphicon-triangle-right"></i> <%# Container.ItemIndex + 1 %>. <%# Eval("Company_Name") %>
-                                                            </a>
-                                                        </h4>
-                                                    </div>
-                                                    <div id='collapseCompany_<%# Eval("Id") %>' class="panel-collapse collapse">
-                                                        <div class="panel-body">
-                                                            <div class="row">
-                                                                <div class="col-sm-6">
-                                                                    <b>PIC:</b> <%# Eval("PIC") %><br />
-                                                                    <b>Country:</b> <%# Eval("Company_Country") %><br />
-                                                                    <b>Date Inquiry:</b> <%# Eval("Date_Inquiry", "{0:dd-MMM-yyyy}") %>
-                                                                </div>
-                                                                <div class="col-sm-6">
-                                                                    <b>Sector:</b> <%# Eval("Company_Industry_Type") %><br />
-                                                                    <b>Land Required:</b> <%# Eval("Land_Size_Required") %> acres<br />
-                                                                    <b>Decision Making:</b> <%# Eval("Investors_Decision_Making") %>
-                                                                </div>
-                                                                <div class="col-sm-12" style="margin-top: 10px;">
-                                                                    <a href='Edit_Investors_Profile2.aspx?id=<%# Eval("Id") %>' class="btn btn-default btn-sm" title="Edit Profile">
-                                                                        <i class="glyphicon glyphicon-pencil"></i> Edit
-                                                                    </a><a href='FileManage_Investors_Profile2.aspx?id=<%# Eval("Id") %>' class="btn btn-default btn-sm" title="Manage Files">
-                                                                        <i class="glyphicon glyphicon-paperclip"></i> Files
-                                                                    </a>
-                                                                    
-                                                                    <a href='Print_Investors_Profile.aspx?id=<%# Eval("Id") %>' target="_blank" class="btn btn-default btn-sm" title="Print Profile">
-                                                                        <i class="glyphicon glyphicon-print"></i> Print
-                                                                    </a>
-                                                                    <a href='company_contacts.aspx?id=<%# Eval("Id") %>' class="btn btn-default btn-sm" title="Company Contacts">
-                                                                        <i class="glyphicon glyphicon-phone"></i> Contacts <span class="badge"><%# Eval("ContactCount") %></span>
-                                                                    </a>
-                                                                    <a href='List_Investors_Activities2.aspx?id=<%# Eval("Id") %>' target="_blank" class="btn btn-default btn-sm" title="Company Activities">
-                                                                        <i class="glyphicon glyphicon-list-alt"></i> Activities <span class="badge"><%# Eval("ActivityCount") %></span>
-                                                                    </a>
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </ItemTemplate>
-                                        </asp:Repeater>
+                                    <div class="table-responsive">
+                                        <table class="table table-striped table-hover table-bordered table-hot">
+                                            <thead>
+                                                <tr>
+                                                    <th style="width: 40px;">#</th>
+                                                    <th>Company Name</th>
+                                                    <th>PIC</th>
+                                                    <th>Country</th>
+                                                    <th>Date Inquiry</th>
+                                                    <th>Sector</th>
+                                                    <th>Land Required (Acres)</th>
+                                                    <th>Decision Making</th>
+                                                    <th style="width: 320px; text-align: center;">Actions</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                <asp:Repeater ID="rptHot" runat="server">
+                                                    <ItemTemplate>
+                                                        <tr>
+                                                            <td style="text-align: center;"><%# Container.ItemIndex + 1 %></td>
+                                                            <td><strong><%# Eval("Company_Name") %></strong></td>
+                                                            <td><%# Eval("PIC") %></td>
+                                                            <td style="text-align: center;"><%# Eval("Company_Country") %></td>
+                                                            <td style="text-align: center;"><%# Eval("Date_Inquiry", "{0:dd-MMM-yyyy}") %></td>
+                                                            <td><%# Eval("Company_Industry_Type") %></td>
+                                                            <td style="text-align: right;"><%# Eval("Land_Size_Required") %></td>
+                                                            <td><%# Eval("Investors_Decision_Making") %></td>
+                                                            <td style="text-align: center; white-space: nowrap;">
+                                                                <a href='Edit_Investors_Profile2.aspx?id=<%# Eval("Id") %>' class="btn btn-default btn-xs" title="Edit Profile" style="margin-right: 2px;">
+                                                                    <i class="glyphicon glyphicon-pencil"></i> Edit
+                                                                </a>
+                                                                <a href='FileManage_Investors_Profile2.aspx?id=<%# Eval("Id") %>' class="btn btn-default btn-xs" title="Manage Files" style="margin-right: 2px;">
+                                                                    <i class="glyphicon glyphicon-paperclip"></i> Files
+                                                                </a>
+                                                                <a href='Print_Investors_Profile.aspx?id=<%# Eval("Id") %>' target="_blank" class="btn btn-default btn-xs" title="Print Profile" style="margin-right: 2px;">
+                                                                    <i class="glyphicon glyphicon-print"></i> Print
+                                                                </a>
+                                                                <a href='company_contacts.aspx?id=<%# Eval("Id") %>' class="btn btn-default btn-xs" title="Company Contacts" style="margin-right: 2px;">
+                                                                    <i class="glyphicon glyphicon-phone"></i> Contacts <span class="badge" style="background-color: #777;"><%# Eval("ContactCount") %></span>
+                                                                </a>
+                                                                <a href='List_Investors_Activities2.aspx?id=<%# Eval("Id") %>' target="_blank" class="btn btn-default btn-xs" title="Company Activities">
+                                                                    <i class="glyphicon glyphicon-list-alt"></i> Activities <span class="badge" style="background-color: #777;"><%# Eval("ActivityCount") %></span>
+                                                                </a>
+                                                            </td>
+                                                        </tr>
+                                                    </ItemTemplate>
+                                                </asp:Repeater>
+                                            </tbody>
+                                        </table>
                                     </div>
                                 </div>
                             </div>
@@ -176,55 +203,57 @@
                                     </a>
                                 </h4>
                             </div>
-                            <div id="collapseWarm" class="panel-collapse collapse">
+                             <div id="collapseWarm" class="panel-collapse collapse">
                                 <div class="panel-body">
-                                    <div class="panel-group" id="accordionWarm">
-                                        <asp:Repeater ID="rptWarm" runat="server">
-                                            <ItemTemplate>
-                                                <div class="panel panel-default">
-                                                    <div class="panel-heading" style="background-color: #f9f9f9;">
-                                                        <h4 class="panel-title" style="font-size: 14px;">
-                                                            <a data-toggle="collapse" data-parent="#accordionWarm" href='#collapseCompany_<%# Eval("Id") %>' style="text-decoration:none;">
-                                                                <i class="glyphicon glyphicon-triangle-right"></i> <%# Container.ItemIndex + 1 %>. <%# Eval("Company_Name") %>
-                                                            </a>
-                                                        </h4>
-                                                    </div>
-                                                    <div id='collapseCompany_<%# Eval("Id") %>' class="panel-collapse collapse">
-                                                        <div class="panel-body">
-                                                            <div class="row">
-                                                                <div class="col-sm-6">
-                                                                    <b>PIC:</b> <%# Eval("PIC") %><br />
-                                                                    <b>Country:</b> <%# Eval("Company_Country") %><br />
-                                                                    <b>Date Inquiry:</b> <%# Eval("Date_Inquiry", "{0:dd-MMM-yyyy}") %>
-                                                                </div>
-                                                                <div class="col-sm-6">
-                                                                    <b>Sector:</b> <%# Eval("Company_Industry_Type") %><br />
-                                                                    <b>Land Required:</b> <%# Eval("Land_Size_Required") %> acres<br />
-                                                                    <b>Decision Making:</b> <%# Eval("Investors_Decision_Making") %>
-                                                                </div>
-                                                                <div class="col-sm-12" style="margin-top: 10px;">
-                                                                    <a href='Edit_Investors_Profile2.aspx?id=<%# Eval("Id") %>' class="btn btn-default btn-sm" title="Edit Profile">
-                                                                        <i class="glyphicon glyphicon-pencil"></i> Edit
-                                                                    </a><a href='FileManage_Investors_Profile2.aspx?id=<%# Eval("Id") %>' class="btn btn-default btn-sm" title="Manage Files">
-                                                                        <i class="glyphicon glyphicon-paperclip"></i> Files
-                                                                    </a>
-                                                                    
-                                                                    <a href='Print_Investors_Profile.aspx?id=<%# Eval("Id") %>' target="_blank" class="btn btn-default btn-sm" title="Print Profile">
-                                                                        <i class="glyphicon glyphicon-print"></i> Print
-                                                                    </a>
-                                                                    <a href='company_contacts.aspx?id=<%# Eval("Id") %>' class="btn btn-default btn-sm" title="Company Contacts">
-                                                                        <i class="glyphicon glyphicon-phone"></i> Contacts <span class="badge"><%# Eval("ContactCount") %></span>
-                                                                    </a>
-                                                                    <a href='List_Investors_Activities2.aspx?id=<%# Eval("Id") %>' target="_blank" class="btn btn-default btn-sm" title="Company Activities">
-                                                                        <i class="glyphicon glyphicon-list-alt"></i> Activities <span class="badge"><%# Eval("ActivityCount") %></span>
-                                                                    </a>
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </ItemTemplate>
-                                        </asp:Repeater>
+                                    <div class="table-responsive">
+                                        <table class="table table-striped table-hover table-bordered table-warm">
+                                            <thead>
+                                                <tr>
+                                                    <th style="width: 40px;">#</th>
+                                                    <th>Company Name</th>
+                                                    <th>PIC</th>
+                                                    <th>Country</th>
+                                                    <th>Date Inquiry</th>
+                                                    <th>Sector</th>
+                                                    <th>Land Required (Acres)</th>
+                                                    <th>Decision Making</th>
+                                                    <th style="width: 320px; text-align: center;">Actions</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                <asp:Repeater ID="rptWarm" runat="server">
+                                                    <ItemTemplate>
+                                                        <tr>
+                                                            <td style="text-align: center;"><%# Container.ItemIndex + 1 %></td>
+                                                            <td><strong><%# Eval("Company_Name") %></strong></td>
+                                                            <td><%# Eval("PIC") %></td>
+                                                            <td style="text-align: center;"><%# Eval("Company_Country") %></td>
+                                                            <td style="text-align: center;"><%# Eval("Date_Inquiry", "{0:dd-MMM-yyyy}") %></td>
+                                                            <td><%# Eval("Company_Industry_Type") %></td>
+                                                            <td style="text-align: right;"><%# Eval("Land_Size_Required") %></td>
+                                                            <td><%# Eval("Investors_Decision_Making") %></td>
+                                                            <td style="text-align: center; white-space: nowrap;">
+                                                                <a href='Edit_Investors_Profile2.aspx?id=<%# Eval("Id") %>' class="btn btn-default btn-xs" title="Edit Profile" style="margin-right: 2px;">
+                                                                    <i class="glyphicon glyphicon-pencil"></i> Edit
+                                                                </a>
+                                                                <a href='FileManage_Investors_Profile2.aspx?id=<%# Eval("Id") %>' class="btn btn-default btn-xs" title="Manage Files" style="margin-right: 2px;">
+                                                                    <i class="glyphicon glyphicon-paperclip"></i> Files
+                                                                </a>
+                                                                <a href='Print_Investors_Profile.aspx?id=<%# Eval("Id") %>' target="_blank" class="btn btn-default btn-xs" title="Print Profile" style="margin-right: 2px;">
+                                                                    <i class="glyphicon glyphicon-print"></i> Print
+                                                                </a>
+                                                                <a href='company_contacts.aspx?id=<%# Eval("Id") %>' class="btn btn-default btn-xs" title="Company Contacts" style="margin-right: 2px;">
+                                                                    <i class="glyphicon glyphicon-phone"></i> Contacts <span class="badge" style="background-color: #777;"><%# Eval("ContactCount") %></span>
+                                                                </a>
+                                                                <a href='List_Investors_Activities2.aspx?id=<%# Eval("Id") %>' target="_blank" class="btn btn-default btn-xs" title="Company Activities">
+                                                                    <i class="glyphicon glyphicon-list-alt"></i> Activities <span class="badge" style="background-color: #777;"><%# Eval("ActivityCount") %></span>
+                                                                </a>
+                                                            </td>
+                                                        </tr>
+                                                    </ItemTemplate>
+                                                </asp:Repeater>
+                                            </tbody>
+                                        </table>
                                     </div>
                                 </div>
                             </div>
@@ -235,59 +264,61 @@
                             <div class="panel-heading" style="background-color: blue; color: white;">
                                 <h4 class="panel-title">
                                     <a data-toggle="collapse" data-parent="#accordionMain" href="#collapseCold" style="text-decoration:none;">
-                                        <i class="glyphicon glyphicon-ice-lolly"></i> COLD LEADS <span class="badge pull-right" style="margin-top: 2px;"><%= lblCold.Text %></span>
+                                        <i class="glyphicon glyphicon-ice-lolly"></i> COLD LEADS <span class="badge pull-right"><%= lblCold.Text %></span>
                                     </a>
                                 </h4>
                             </div>
-                            <div id="collapseCold" class="panel-collapse collapse">
+                             <div id="collapseCold" class="panel-collapse collapse">
                                 <div class="panel-body">
-                                    <div class="panel-group" id="accordionCold">
-                                        <asp:Repeater ID="rptCold" runat="server">
-                                            <ItemTemplate>
-                                                <div class="panel panel-default">
-                                                    <div class="panel-heading" style="background-color: #f9f9f9;">
-                                                        <h4 class="panel-title" style="font-size: 14px;">
-                                                            <a data-toggle="collapse" data-parent="#accordionCold" href='#collapseCompany_<%# Eval("Id") %>' style="text-decoration:none;">
-                                                                <i class="glyphicon glyphicon-triangle-right"></i> <%# Container.ItemIndex + 1 %>. <%# Eval("Company_Name") %>
-                                                            </a>
-                                                        </h4>
-                                                    </div>
-                                                    <div id='collapseCompany_<%# Eval("Id") %>' class="panel-collapse collapse">
-                                                        <div class="panel-body">
-                                                            <div class="row">
-                                                                <div class="col-sm-6">
-                                                                    <b>PIC:</b> <%# Eval("PIC") %><br />
-                                                                    <b>Country:</b> <%# Eval("Company_Country") %><br />
-                                                                    <b>Date Inquiry:</b> <%# Eval("Date_Inquiry", "{0:dd-MMM-yyyy}") %>
-                                                                </div>
-                                                                <div class="col-sm-6">
-                                                                    <b>Sector:</b> <%# Eval("Company_Industry_Type") %><br />
-                                                                    <b>Land Required:</b> <%# Eval("Land_Size_Required") %> acres<br />
-                                                                    <b>Decision Making:</b> <%# Eval("Investors_Decision_Making") %>
-                                                                </div>
-                                                                <div class="col-sm-12" style="margin-top: 10px;">
-                                                                    <a href='Edit_Investors_Profile2.aspx?id=<%# Eval("Id") %>' class="btn btn-default btn-sm" title="Edit Profile">
-                                                                        <i class="glyphicon glyphicon-pencil"></i> Edit
-                                                                    </a><a href='FileManage_Investors_Profile2.aspx?id=<%# Eval("Id") %>' class="btn btn-default btn-sm" title="Manage Files">
-                                                                        <i class="glyphicon glyphicon-paperclip"></i> Files
-                                                                    </a>
-                                                                    
-                                                                    <a href='Print_Investors_Profile.aspx?id=<%# Eval("Id") %>' target="_blank" class="btn btn-default btn-sm" title="Print Profile">
-                                                                        <i class="glyphicon glyphicon-print"></i> Print
-                                                                    </a>
-                                                                    <a href='company_contacts.aspx?id=<%# Eval("Id") %>' class="btn btn-default btn-sm" title="Company Contacts">
-                                                                        <i class="glyphicon glyphicon-phone"></i> Contacts <span class="badge"><%# Eval("ContactCount") %></span>
-                                                                    </a>
-                                                                    <a href='List_Investors_Activities2.aspx?id=<%# Eval("Id") %>' target="_blank" class="btn btn-default btn-sm" title="Company Activities">
-                                                                        <i class="glyphicon glyphicon-list-alt"></i> Activities <span class="badge"><%# Eval("ActivityCount") %></span>
-                                                                    </a>
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </ItemTemplate>
-                                        </asp:Repeater>
+                                    <div class="table-responsive">
+                                        <table class="table table-striped table-hover table-bordered">
+                                            <thead>
+                                                <tr>
+                                                    <th style="width: 40px;">#</th>
+                                                    <th>Company Name</th>
+                                                    <th>PIC</th>
+                                                    <th>Country</th>
+                                                    <th>Date Inquiry</th>
+                                                    <th>Sector</th>
+                                                    <th>Land Required (Acres)</th>
+                                                    <th>Decision Making</th>
+                                                    <th style="width: 320px; text-align: center;">Actions</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                <asp:Repeater ID="rptCold" runat="server">
+                                                    <ItemTemplate>
+                                                        <tr>
+                                                            <td style="text-align: center;"><%# Container.ItemIndex + 1 %></td>
+                                                            <td><strong><%# Eval("Company_Name") %></strong></td>
+                                                            <td><%# Eval("PIC") %></td>
+                                                            <td style="text-align: center;"><%# Eval("Company_Country") %></td>
+                                                            <td style="text-align: center;"><%# Eval("Date_Inquiry", "{0:dd-MMM-yyyy}") %></td>
+                                                            <td><%# Eval("Company_Industry_Type") %></td>
+                                                            <td style="text-align: right;"><%# Eval("Land_Size_Required") %></td>
+                                                            <td><%# Eval("Investors_Decision_Making") %></td>
+                                                            <td style="text-align: center; white-space: nowrap;">
+                                                                <a href='Edit_Investors_Profile2.aspx?id=<%# Eval("Id") %>' class="btn btn-default btn-xs" title="Edit Profile" style="margin-right: 2px;">
+                                                                    <i class="glyphicon glyphicon-pencil"></i> Edit
+                                                                </a>
+                                                                <a href='FileManage_Investors_Profile2.aspx?id=<%# Eval("Id") %>' class="btn btn-default btn-xs" title="Manage Files" style="margin-right: 2px;">
+                                                                    <i class="glyphicon glyphicon-paperclip"></i> Files
+                                                                </a>
+                                                                <a href='Print_Investors_Profile.aspx?id=<%# Eval("Id") %>' target="_blank" class="btn btn-default btn-xs" title="Print Profile" style="margin-right: 2px;">
+                                                                    <i class="glyphicon glyphicon-print"></i> Print
+                                                                </a>
+                                                                <a href='company_contacts.aspx?id=<%# Eval("Id") %>' class="btn btn-default btn-xs" title="Company Contacts" style="margin-right: 2px;">
+                                                                    <i class="glyphicon glyphicon-phone"></i> Contacts <span class="badge"><%# Eval("ContactCount") %></span>
+                                                                </a>
+                                                                <a href='List_Investors_Activities2.aspx?id=<%# Eval("Id") %>' target="_blank" class="btn btn-default btn-xs" title="Company Activities">
+                                                                    <i class="glyphicon glyphicon-list-alt"></i> Activities <span class="badge"><%# Eval("ActivityCount") %></span>
+                                                                </a>
+                                                            </td>
+                                                        </tr>
+                                                    </ItemTemplate>
+                                                </asp:Repeater>
+                                            </tbody>
+                                        </table>
                                     </div>
                                 </div>
                             </div>
@@ -302,55 +333,57 @@
                                     </a>
                                 </h4>
                             </div>
-                            <div id="collapseCompleted" class="panel-collapse collapse">
+                             <div id="collapseCompleted" class="panel-collapse collapse">
                                 <div class="panel-body">
-                                    <div class="panel-group" id="accordionCompleted">
-                                        <asp:Repeater ID="rptCompleted" runat="server">
-                                            <ItemTemplate>
-                                                <div class="panel panel-default">
-                                                    <div class="panel-heading" style="background-color: #f9f9f9;">
-                                                        <h4 class="panel-title" style="font-size: 14px;">
-                                                            <a data-toggle="collapse" data-parent="#accordionCompleted" href='#collapseCompany_<%# Eval("Id") %>' style="text-decoration:none;">
-                                                                <i class="glyphicon glyphicon-triangle-right"></i> <%# Container.ItemIndex + 1 %>. <%# Eval("Company_Name") %>
-                                                            </a>
-                                                        </h4>
-                                                    </div>
-                                                    <div id='collapseCompany_<%# Eval("Id") %>' class="panel-collapse collapse">
-                                                        <div class="panel-body">
-                                                            <div class="row">
-                                                                <div class="col-sm-6">
-                                                                    <b>PIC:</b> <%# Eval("PIC") %><br />
-                                                                    <b>Country:</b> <%# Eval("Company_Country") %><br />
-                                                                    <b>Date Inquiry:</b> <%# Eval("Date_Inquiry", "{0:dd-MMM-yyyy}") %>
-                                                                </div>
-                                                                <div class="col-sm-6">
-                                                                    <b>Sector:</b> <%# Eval("Company_Industry_Type") %><br />
-                                                                    <b>Land Required:</b> <%# Eval("Land_Size_Required") %> acres<br />
-                                                                    <b>Decision Making:</b> <%# Eval("Investors_Decision_Making") %>
-                                                                </div>
-                                                                <div class="col-sm-12" style="margin-top: 10px;">
-                                                                    <a href='Edit_Investors_Profile2.aspx?id=<%# Eval("Id") %>' class="btn btn-default btn-sm" title="Edit Profile">
-                                                                        <i class="glyphicon glyphicon-pencil"></i> Edit
-                                                                    </a><a href='FileManage_Investors_Profile2.aspx?id=<%# Eval("Id") %>' class="btn btn-default btn-sm" title="Manage Files">
-                                                                        <i class="glyphicon glyphicon-paperclip"></i> Files
-                                                                    </a>
-                                                                    
-                                                                    <a href='Print_Investors_Profile.aspx?id=<%# Eval("Id") %>' target="_blank" class="btn btn-default btn-sm" title="Print Profile">
-                                                                        <i class="glyphicon glyphicon-print"></i> Print
-                                                                    </a>
-                                                                    <a href='company_contacts.aspx?id=<%# Eval("Id") %>' class="btn btn-default btn-sm" title="Company Contacts">
-                                                                        <i class="glyphicon glyphicon-phone"></i> Contacts <span class="badge"><%# Eval("ContactCount") %></span>
-                                                                    </a>
-                                                                    <a href='List_Investors_Activities2.aspx?id=<%# Eval("Id") %>' target="_blank" class="btn btn-default btn-sm" title="Company Activities">
-                                                                        <i class="glyphicon glyphicon-list-alt"></i> Activities <span class="badge"><%# Eval("ActivityCount") %></span>
-                                                                    </a>
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </ItemTemplate>
-                                        </asp:Repeater>
+                                    <div class="table-responsive">
+                                        <table class="table table-striped table-hover table-bordered table-completed">
+                                            <thead>
+                                                <tr>
+                                                    <th style="width: 40px;">#</th>
+                                                    <th>Company Name</th>
+                                                    <th>PIC</th>
+                                                    <th>Country</th>
+                                                    <th>Date Inquiry</th>
+                                                    <th>Sector</th>
+                                                    <th>Land Required (Acres)</th>
+                                                    <th>Decision Making</th>
+                                                    <th style="width: 320px; text-align: center;">Actions</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                <asp:Repeater ID="rptCompleted" runat="server">
+                                                    <ItemTemplate>
+                                                        <tr>
+                                                            <td style="text-align: center;"><%# Container.ItemIndex + 1 %></td>
+                                                            <td><strong><%# Eval("Company_Name") %></strong></td>
+                                                            <td><%# Eval("PIC") %></td>
+                                                            <td style="text-align: center;"><%# Eval("Company_Country") %></td>
+                                                            <td style="text-align: center;"><%# Eval("Date_Inquiry", "{0:dd-MMM-yyyy}") %></td>
+                                                            <td><%# Eval("Company_Industry_Type") %></td>
+                                                            <td style="text-align: right;"><%# Eval("Land_Size_Required") %></td>
+                                                            <td><%# Eval("Investors_Decision_Making") %></td>
+                                                            <td style="text-align: center; white-space: nowrap;">
+                                                                <a href='Edit_Investors_Profile2.aspx?id=<%# Eval("Id") %>' class="btn btn-default btn-xs" title="Edit Profile" style="margin-right: 2px;">
+                                                                    <i class="glyphicon glyphicon-pencil"></i> Edit
+                                                                </a>
+                                                                <a href='FileManage_Investors_Profile2.aspx?id=<%# Eval("Id") %>' class="btn btn-default btn-xs" title="Manage Files" style="margin-right: 2px;">
+                                                                    <i class="glyphicon glyphicon-paperclip"></i> Files
+                                                                </a>
+                                                                <a href='Print_Investors_Profile.aspx?id=<%# Eval("Id") %>' target="_blank" class="btn btn-default btn-xs" title="Print Profile" style="margin-right: 2px;">
+                                                                    <i class="glyphicon glyphicon-print"></i> Print
+                                                                </a>
+                                                                <a href='company_contacts.aspx?id=<%# Eval("Id") %>' class="btn btn-default btn-xs" title="Company Contacts" style="margin-right: 2px;">
+                                                                    <i class="glyphicon glyphicon-phone"></i> Contacts <span class="badge" style="background-color: #777;"><%# Eval("ContactCount") %></span>
+                                                                </a>
+                                                                <a href='List_Investors_Activities2.aspx?id=<%# Eval("Id") %>' target="_blank" class="btn btn-default btn-xs" title="Company Activities">
+                                                                    <i class="glyphicon glyphicon-list-alt"></i> Activities <span class="badge" style="background-color: #777;"><%# Eval("ActivityCount") %></span>
+                                                                </a>
+                                                            </td>
+                                                        </tr>
+                                                    </ItemTemplate>
+                                                </asp:Repeater>
+                                            </tbody>
+                                        </table>
                                     </div>
                                 </div>
                             </div>
